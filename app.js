@@ -25,8 +25,8 @@ function detectTask(t) {
 let taskManual = false;
 const state = () => ({
   task: $("task").value, slider: +$("slider").value / 100,
-  inTok: +$("inTok").value || 0, outTok: +$("outTok").value || 0, volume: +$("volume").value || 0,
-  minCtx: +$("minCtx").value || 0, needVision: $("needVision").checked, ignore: $("ignoreCost").checked});
+  inTok: 0, outTok: 0, volume: 0,
+  minCtx: 0, needVision: false, ignore: $("ignoreCost").checked});
 
 // ---------- data ----------
 async function getJSON(url, ms = 8000) {
@@ -202,7 +202,7 @@ $("prompt").addEventListener("input", () => {
     : k ? "Detected: " + TASK_LABEL[k] + (taskManual ? " (set manually)" : "") : "Couldn't tell — click change to pick one.";
   renderRecommender();
 });
-["task","slider","inTok","outTok","volume","minCtx","needVision"].forEach(id => $(id).addEventListener("input", renderRecommender));
+["task","slider"].forEach(id => $(id).addEventListener("input", renderRecommender));
 $("ignoreCost").addEventListener("change", () => { localStorage.setItem("modelPicker.ignore", $("ignoreCost").checked ? "1" : ""); render(); renderCompare(); });
 ["q","tierFilter","fVision","fRated"].forEach(id => $(id).addEventListener("input", renderDashboard));
 $("table").addEventListener("click", e => {
