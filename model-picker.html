@@ -277,8 +277,7 @@ function renderRecommender() {
   document.body.classList.toggle("ign", s.ignore);
   $("modeHint").textContent = s.ignore
     ? "Cost is ignored: ranking uses quality/fit only and no $ figures are shown. Token usage is still tracked."
-    : hasTok ? "Ranking blends quality and cost using the slider."
-    : "No token counts entered: ranking is quality/fit first; price is only a light tiebreaker. Prices shown per 1M tokens.";
+    : "Ranking blends quality and cost using the Quality ↔ cost slider." + (hasTok ? "" : " Prices shown per 1M tokens.");
   // usage panel
   const perMonth = tokens * s.volume;
   $("usage").innerHTML = `<h3>Your token usage</h3>` + (hasTok
@@ -287,7 +286,7 @@ function renderRecommender() {
       `<div><b>${c.length ? (100 * tokens / Math.max(...c.map(m => m.ctx))).toFixed(2) : "–"}%</b> – <b>${c.length ? (100 * tokens / Math.min(...c.map(m => m.ctx))).toFixed(1) : "–"}%</b> of context window<br><span class="hint">across matching models</span></div></div>`
     : `<p class="hint">Enter input/output tokens to see tokens per request, per month and % of context used. Optional.</p>`);
   if (!c.length) { $("results").innerHTML = `<div class="panel">No models match these constraints. Loosen the minimum context or vision requirement.</div>`; return; }
-  const wo = s.ignore ? 0 : 0.1;
+  const wo = s.ignore ? 0 : s.slider;
   const overall = best(c, m => scoreWith(m, wo));
   const cards = [card("Best overall", overall, s, hasTok)];
   if (s.ignore) {
@@ -295,12 +294,12 @@ function renderRecommender() {
     const ok = c.filter(m => m.ratings[s.task] >= 3);
     if (ok.length) cards.push(card("Fastest acceptable", best(ok, m => m.ratings.speed * 10 + m.q), s, hasTok));
   } else {
-    const wv = hasTok ? Math.max(s.slider, 0.4) : 0.25;
+    const wv = Math.max(s.slider, 0.4);
     cards.push(card("Best value", best(c, m => scoreWith(m, wv)), s, hasTok));
     const ok = c.filter(m => m.ratings[s.task] >= 3);
     if (ok.length) cards.push(card("Cheapest acceptable", best(ok, m => -m.basis * 1e6 + m.q), s, hasTok));
   }
-  const w = s.ignore ? 0 : hasTok ? s.slider : 0.1 * s.slider;
+  const w = s.ignore ? 0 : s.slider;
   const top = [...c].sort((a, b) => scoreWith(b, w) - scoreWith(a, w) || b.ctx - a.ctx).slice(0, 10);
   $("results").innerHTML = `<div class="cards">${cards.join("")}</div>
   <h3 style="margin-top:1rem">Top 10 for your settings</h3><div class="table-wrap"><table><thead><tr><th>#</th><th>Model</th><th>Quality</th>${hasTok ? "<th class=n>Context used</th>" : ""}<th class=n>Efficiency</th>${s.ignore ? "" : `<th class=n>${hasTok ? "Per request" : "$/1M (blended)"}</th>${hasTok && s.volume ? "<th class=n>Per month</th>" : ""}`}</tr></thead><tbody>
