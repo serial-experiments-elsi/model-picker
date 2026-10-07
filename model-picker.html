@@ -159,7 +159,7 @@ const HEUR = { // fallback ratings by price tier
 let models = [], source = "", sortKey = "name", sortDir = 1;
 const selected = new Set();
 const KW = {
-  vision: /\b(image|photo|picture|screenshot|diagram|ocr|chart|scan|vision|visual|video|figma|design mock)\w*/i,
+  vision: /\b(image|photo|picture|screenshot|diagram|ocr|chart|scan|vision|visual|video|figma|design|graphic|logo|illustrat|poster|banner|mockup|layout|branding|ux|ui\b|typograph|infographic|icon|sketch|draw)\w*/i,
   coding: /\b(code|coding|function|bug|debug|refactor|script|python|javascript|typescript|java|rust|golang|sql|regex|api|unit test|test case|compil|repo|program|develop|software|frontend|backend|app\b|website|css|html|react|deploy|algorithm)\w*/i,
   extraction: /\b(summari|summary|extract|classif|tag|parse|pdf|invoice|transcript|translat|json|table|categori|label|sentiment|tl;?dr|digest|notes|data entry)\w*/i,
   reasoning: /\b(reason|analy|math|proof|plan|strateg|logic|puzzle|research|decid|decision|compar|trade-?off|why|evaluat|diagnos|solve|problem|forecast|critique|review|architect)\w*/i,
