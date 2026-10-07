@@ -26,7 +26,7 @@ let taskManual = false;
 const state = () => ({
   task: $("task").value, slider: +$("slider").value / 100,
   inTok: 0, outTok: 0, volume: 0,
-  minCtx: 0, needVision: false, ignore: $("ignoreCost").checked});
+  minCtx: 0, needVision: false, ignore: false});
 
 // ---------- data ----------
 async function getJSON(url, ms = 8000) {
@@ -164,7 +164,7 @@ const COLS = [
   ...RK.map(k => ["r_" + k, TASK_LABEL[k], 1]), ["rated","Rated"]];
 const val = (m, k) => k.startsWith("r_") ? m.ratings[k.slice(2)] : k === "rated" ? +m.rated : m[k];
 function renderDashboard() {
-  const ign = $("ignoreCost").checked, q = $("q").value.toLowerCase(), tf = $("tierFilter").value;
+  const ign = false, q = $("q").value.toLowerCase(), tf = $("tierFilter").value;
   let rows = pool().filter(m => (!q || (m.name + m.id).toLowerCase().includes(q)) && (!tf || m.tier === tf) && (!$("fVision").checked || m.vision) && (!$("fRated").checked || m.rated));
   rows.sort((a, b) => { const x = val(a, sortKey), y = val(b, sortKey); return (typeof x === "string" ? x.localeCompare(y) : x - y) * sortDir; });
   const cols = COLS.filter(c => !(ign && c[3] === "$"));
@@ -175,7 +175,7 @@ function renderDashboard() {
   $("cmpCount").textContent = selected.size;
 }
 function renderCompare() {
-  const ms = models.filter(m => selected.has(m.id)), ign = $("ignoreCost").checked;
+  const ms = models.filter(m => selected.has(m.id)), ign = false;
   if (ms.length < 2) { $("compare").innerHTML = `<div class="panel">Select at least two models to compare.</div>`; return; }
   const rows = [["Tier", m => m.tier], ["Context", m => fmt(m.ctx)], ["Vision", m => m.vision ? "yes" : "no"],
     ...(ign ? [] : [["Input $/1M", m => usd(m.pIn)], ["Output $/1M", m => usd(m.pOut)]]),
@@ -185,7 +185,7 @@ function renderCompare() {
 }
 
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const pool = () => $("ghOnly").checked ? models.filter(m => m.gh) : models;
+const pool = () => models.filter(m => m.gh);
 function render() { renderRecommender(); renderDashboard(); }
 
 // ---------- events ----------
@@ -203,7 +203,6 @@ $("prompt").addEventListener("input", () => {
   renderRecommender();
 });
 ["task","slider"].forEach(id => $(id).addEventListener("input", renderRecommender));
-$("ignoreCost").addEventListener("change", () => { localStorage.setItem("modelPicker.ignore", $("ignoreCost").checked ? "1" : ""); render(); renderCompare(); });
 ["q","tierFilter","fVision","fRated"].forEach(id => $(id).addEventListener("input", renderDashboard));
 $("table").addEventListener("click", e => {
   const th = e.target.closest("th[data-k]");
@@ -215,8 +214,5 @@ $("refresh").onclick = async () => { $("refresh").disabled = true; await init(tr
 const setTheme = t => { document.documentElement.dataset.theme = t; localStorage.setItem("modelPicker.theme", t); };
 $("theme").onclick = () => setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
 setTheme(localStorage.getItem("modelPicker.theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
-$("ghOnly").addEventListener("change", () => { localStorage.setItem("modelPicker.gh", $("ghOnly").checked ? "1" : "0"); render(); });
-$("ghOnly").checked = localStorage.getItem("modelPicker.gh") !== "0";
-$("ignoreCost").checked = !!localStorage.getItem("modelPicker.ignore");
 init(false);
 })();

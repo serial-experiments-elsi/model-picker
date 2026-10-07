@@ -37,9 +37,6 @@ For each model that passes the filters (context >= minimum and >= input+output t
 - **Cheapest acceptable**: lowest cost among models rated >= 3 for the task.
 - **Usage efficiency** = `quality * (0.7 + 0.3 * speed/5) / (1 + contextUsed)`, shown relative to the best candidate (100). Context used = `(input+output tokens) / context window`.
 
-### "My company pays / ignore cost"
-
-Sets `w = 0` everywhere and hides every $ figure (cards, tables, dashboard price columns, compare). Token usage stays visible: tokens per request, tokens per month, % of context window used and usage efficiency. "Best value" and "Cheapest acceptable" become "Most usage-efficient" and "Fastest acceptable". Without this toggle, entering tokens shows costs per request and per month.
 
 ## Updating curated ratings when new models launch
 
@@ -64,4 +61,4 @@ Rebuild after editing `models-curated.json` or the snapshot.
 
 ## GitHub Copilot models only
 
-The header toggle (on by default) restricts recommendations to the 12 models in `github-models.json`. Ratings, context and prices there are **estimates**; Copilot actually bills by premium-request multipliers, not $/token.
+Recommendations and the dashboard are restricted to the 12 models in `github-models.json`. Ratings, context and prices there are **estimates**; Copilot actually bills by premium-request multipliers, not $/token.
