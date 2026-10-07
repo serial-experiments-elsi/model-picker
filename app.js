@@ -8,7 +8,7 @@ const HEUR = { // fallback ratings by price tier
   flagship:{coding:4,reasoning:4,writing:4,extraction:4,vision:4,speed:2},
   balanced:{coding:3,reasoning:3,writing:3,extraction:3,vision:3,speed:3},
   "fast-cheap":{coding:2,reasoning:2,writing:3,extraction:3,vision:2,speed:5}};
-let models = [], source = "", sortKey = "name", sortDir = 1;
+let ghModels = [], models = [], source = "", sortKey = "name", sortDir = 1;
 const selected = new Set();
 const KW = {
   vision: /\b(image|photo|picture|screenshot|diagram|ocr|chart|scan|vision|visual|video|figma|design|graphic|logo|illustrat|poster|banner|mockup|layout|branding|ux|ui\b|typograph|infographic|icon|sketch|draw)\w*/i,
@@ -70,9 +70,12 @@ async function init(force) {
   let curated = {};
   try { curated = (await getJSON("models-curated.json")).models || {}; }
   catch { $("status").textContent = "Could not load models-curated.json (opened via file://? use `python3 -m http.server`). Using heuristic ratings."; }
+  try { const g = await getJSON("github-models.json"); g.data.forEach(m => curated[m.id] = {tier: m._tier, ratings: m._ratings, notes: m._notes}); ghModels = build(g, curated).map(m => ({...m, gh: true, rated: true})); } catch {}
   try {
     const {data, src} = await loadRaw(force);
-    models = build(data, curated); source = src;
+    const ids = new Set(ghModels.map(m => m.id));
+    models = ghModels.concat(build(data, curated).filter(m => !ids.has(m.id)));
+    source = src;
     const rated = models.filter(m => m.rated).length;
     $("footer").textContent = `${models.length} models · ${rated} with curated ratings · source: ${src}`;
     if (!$("status").textContent.startsWith("Could")) $("status").textContent = "";
@@ -89,7 +92,7 @@ function quality(m, task) {
 }
 function recommend(s) {
   const tokens = s.inTok + s.outTok, hasTok = tokens > 0;
-  let c = models.filter(m => m.ctx >= s.minCtx && m.ctx >= tokens && (!(s.needVision || s.task === "vision") || m.vision) && m.ratings[s.task] > 0);
+  let c = pool().filter(m => m.ctx >= s.minCtx && m.ctx >= tokens && (!(s.needVision || s.task === "vision") || m.vision) && m.ratings[s.task] > 0);
   if (!c.length) return {c, hasTok, tokens};
   c.forEach(m => {
     m.q = quality(m, s.task);
@@ -162,7 +165,7 @@ const COLS = [
 const val = (m, k) => k.startsWith("r_") ? m.ratings[k.slice(2)] : k === "rated" ? +m.rated : m[k];
 function renderDashboard() {
   const ign = $("ignoreCost").checked, q = $("q").value.toLowerCase(), tf = $("tierFilter").value;
-  let rows = models.filter(m => (!q || (m.name + m.id).toLowerCase().includes(q)) && (!tf || m.tier === tf) && (!$("fVision").checked || m.vision) && (!$("fRated").checked || m.rated));
+  let rows = pool().filter(m => (!q || (m.name + m.id).toLowerCase().includes(q)) && (!tf || m.tier === tf) && (!$("fVision").checked || m.vision) && (!$("fRated").checked || m.rated));
   rows.sort((a, b) => { const x = val(a, sortKey), y = val(b, sortKey); return (typeof x === "string" ? x.localeCompare(y) : x - y) * sortDir; });
   const cols = COLS.filter(c => !(ign && c[3] === "$"));
   $("table").innerHTML = `<thead><tr><th></th>${cols.map(c => `<th data-k="${c[0]}" class="${c[2] ? "n" : ""}">${c[1]}${sortKey === c[0] ? (sortDir > 0 ? " ▲" : " ▼") : ""}</th>`).join("")}</tr></thead><tbody>
@@ -182,6 +185,7 @@ function renderCompare() {
 }
 
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const pool = () => $("ghOnly").checked ? models.filter(m => m.gh) : models;
 function render() { renderRecommender(); renderDashboard(); }
 
 // ---------- events ----------
@@ -211,6 +215,8 @@ $("refresh").onclick = async () => { $("refresh").disabled = true; await init(tr
 const setTheme = t => { document.documentElement.dataset.theme = t; localStorage.setItem("modelPicker.theme", t); };
 $("theme").onclick = () => setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
 setTheme(localStorage.getItem("modelPicker.theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
+$("ghOnly").addEventListener("change", () => { localStorage.setItem("modelPicker.gh", $("ghOnly").checked ? "1" : "0"); render(); });
+$("ghOnly").checked = localStorage.getItem("modelPicker.gh") !== "0";
 $("ignoreCost").checked = !!localStorage.getItem("modelPicker.ignore");
 init(false);
 })();

@@ -61,3 +61,7 @@ Run `python3 build.py` to produce **`model-picker.html`**: a single self-contain
 (CSS, JS, curated ratings and offline snapshot all inlined). Email or drop it on a shared drive;
 it opens by double-click, no server needed. It still tries live OpenRouter prices when online.
 Rebuild after editing `models-curated.json` or the snapshot.
+
+## GitHub Copilot models only
+
+The header toggle (on by default) restricts recommendations to the 12 models in `github-models.json`. Ratings, context and prices there are **estimates**; Copilot actually bills by premium-request multipliers, not $/token.
