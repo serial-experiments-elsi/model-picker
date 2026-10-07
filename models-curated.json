@@ -216,6 +216,42 @@
     "speed": 2
    },
    "notes": "Strong reasoning."
+  },
+  "anthropic/claude-opus-4.5": {
+   "tier": "flagship",
+   "ratings": {
+    "coding": 5,
+    "reasoning": 5,
+    "writing": 5,
+    "extraction": 4,
+    "vision": 4,
+    "speed": 2
+   },
+   "notes": "Top-tier quality for hard coding/agentic work; slow and pricey."
+  },
+  "anthropic/claude-sonnet-4.5": {
+   "tier": "balanced",
+   "ratings": {
+    "coding": 5,
+    "reasoning": 4,
+    "writing": 5,
+    "extraction": 4,
+    "vision": 4,
+    "speed": 3
+   },
+   "notes": "Excellent coding/writing default."
+  },
+  "anthropic/claude-haiku-4.5": {
+   "tier": "fast-cheap",
+   "ratings": {
+    "coding": 3,
+    "reasoning": 3,
+    "writing": 4,
+    "extraction": 4,
+    "vision": 0,
+    "speed": 5
+   },
+   "notes": "Quick, inexpensive text tasks."
   }
  }
 }
