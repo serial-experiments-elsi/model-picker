@@ -11,12 +11,12 @@ const HEUR = { // fallback ratings by price tier
 let models = [], source = "", sortKey = "name", sortDir = 1;
 const selected = new Set();
 const KW = {
-  vision: /\b(image|images|photo|picture|screenshot|diagram|ocr|chart|scan(ned)?|vision|video frame)s?\b/i,
-  coding: /\b(code|coding|function|bug|debug|refactor|script|python|javascript|typescript|java|rust|golang|sql|regex|api|unit tests?|compile|repo|program)\b/i,
-  extraction: /\b(summari[sz]e|summary|extract|classif(y|ication)|tag|parse|pdf|invoice|transcript|translate|json|table|categori[sz]e)\w*/i,
-  reasoning: /\b(reason|analy[sz]e|analysis|math|proof|plan|strategy|logic|puzzle|research|decide|compare|trade-?offs?|why)\w*/i,
-  writing: /\b(write|essay|blog|email|article|story|copy|rewrite|draft|poem|marketing|post|tone)\w*/i,
-  speed: /\b(chat|chatbot|quick|real-?time|low latency|fast|autocomplete|instant)\b/i};
+  vision: /\b(image|photo|picture|screenshot|diagram|ocr|chart|scan|vision|visual|video|figma|design mock)\w*/i,
+  coding: /\b(code|coding|function|bug|debug|refactor|script|python|javascript|typescript|java|rust|golang|sql|regex|api|unit test|test case|compil|repo|program|develop|software|frontend|backend|app\b|website|css|html|react|deploy|algorithm)\w*/i,
+  extraction: /\b(summari|summary|extract|classif|tag|parse|pdf|invoice|transcript|translat|json|table|categori|label|sentiment|tl;?dr|digest|notes|data entry)\w*/i,
+  reasoning: /\b(reason|analy|math|proof|plan|strateg|logic|puzzle|research|decid|decision|compar|trade-?off|why|evaluat|diagnos|solve|problem|forecast|critique|review|architect)\w*/i,
+  writing: /\b(write|writing|essay|blog|email|article|story|stories|copy|rewrite|draft|poem|marketing|post|tone|brainstorm|ideas?|ideat|creative|name|names|slogan|tagline|script|pitch|content|caption|speech|newsletter|edit|proofread)\w*/i,
+  speed: /\b(chat|chatbot|quick|real-?time|latency|fast|autocomplete|instant|conversation|support bot|assistant)\w*/i};
 function detectTask(t) {
   let best = null, n = 0;
   for (const k in KW) { const c = (t.match(new RegExp(KW[k].source, "gi")) || []).length; if (c > n) { n = c; best = k; } }
