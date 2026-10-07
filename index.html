@@ -29,7 +29,11 @@
   <div class="panel">
     <h2>What do you need?</h2>
     <div class="grid">
-      <label>Task type
+      <label class="wide">Describe your task
+        <textarea id="prompt" rows="4" placeholder="e.g. Refactor a 2,000-line Python module and add unit tests… or: summarize 50 PDF invoices into a table"></textarea>
+        <span class="hint"><span id="detected">Type a prompt and I'll detect the task type.</span></span>
+      </label>
+      <label>Task type (auto-detected, editable)
         <select id="task">
           <option value="coding">Coding</option>
           <option value="reasoning">Reasoning / analysis</option>

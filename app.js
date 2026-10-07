@@ -10,6 +10,19 @@ const HEUR = { // fallback ratings by price tier
   "fast-cheap":{coding:2,reasoning:2,writing:3,extraction:3,vision:2,speed:5}};
 let models = [], source = "", sortKey = "name", sortDir = 1;
 const selected = new Set();
+const KW = {
+  vision: /\b(image|images|photo|picture|screenshot|diagram|ocr|chart|scan(ned)?|vision|video frame)s?\b/i,
+  coding: /\b(code|coding|function|bug|debug|refactor|script|python|javascript|typescript|java|rust|golang|sql|regex|api|unit tests?|compile|repo|program)\b/i,
+  extraction: /\b(summari[sz]e|summary|extract|classif(y|ication)|tag|parse|pdf|invoice|transcript|translate|json|table|categori[sz]e)\w*/i,
+  reasoning: /\b(reason|analy[sz]e|analysis|math|proof|plan|strategy|logic|puzzle|research|decide|compare|trade-?offs?|why)\w*/i,
+  writing: /\b(write|essay|blog|email|article|story|copy|rewrite|draft|poem|marketing|post|tone)\w*/i,
+  speed: /\b(chat|chatbot|quick|real-?time|low latency|fast|autocomplete|instant)\b/i};
+function detectTask(t) {
+  let best = null, n = 0;
+  for (const k in KW) { const c = (t.match(new RegExp(KW[k].source, "gi")) || []).length; if (c > n) { n = c; best = k; } }
+  return best;
+}
+let taskManual = false;
 const state = () => ({
   task: $("task").value, slider: +$("slider").value / 100,
   inTok: +$("inTok").value || 0, outTok: +$("outTok").value || 0, volume: +$("volume").value || 0,
@@ -180,6 +193,14 @@ function render() { renderRecommender(); renderDashboard(); }
 document.querySelectorAll("#tabs button").forEach(b => b.onclick = () => {
   document.querySelectorAll("#tabs button").forEach(x => x.classList.toggle("active", x === b));
   document.querySelectorAll(".view").forEach(v => v.hidden = v.id !== "view-" + b.dataset.view);
+});
+$("task").addEventListener("change", () => { taskManual = true; });
+$("prompt").addEventListener("input", () => {
+  const t = $("prompt").value.trim(), k = t && detectTask(t);
+  if (!taskManual && k) $("task").value = k;
+  $("detected").textContent = !t ? "Type a prompt and I'll detect the task type."
+    : k ? "Detected: " + TASK_LABEL[k] + (taskManual ? " (you set it manually)" : "") : "Couldn't tell — pick a task type.";
+  renderRecommender();
 });
 ["task","slider","inTok","outTok","volume","minCtx","needVision"].forEach(id => $(id).addEventListener("input", renderRecommender));
 $("ignoreCost").addEventListener("change", () => { localStorage.setItem("modelPicker.ignore", $("ignoreCost").checked ? "1" : ""); render(); renderCompare(); });
