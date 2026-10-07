@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Model Picker</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Model Picker</h1>
+  <nav id="tabs">
+    <button data-view="recommender" class="active">Recommender</button>
+    <button data-view="dashboard">Dashboard</button>
+    <button data-view="tips">Token tips</button>
+  </nav>
+  <div class="header-right">
+    <label class="toggle" title="Removes cost from ranking and hides $ estimates; token usage is still shown">
+      <input type="checkbox" id="ignoreCost"> My company pays / ignore cost
+    </label>
+    <button id="refresh">Refresh</button>
+    <button id="theme" aria-label="Toggle theme">◐</button>
+  </div>
+</header>
+<div id="status" role="status"></div>
+
+<main>
+<section id="view-recommender" class="view">
+  <div class="panel">
+    <h2>What do you need?</h2>
+    <div class="grid">
+      <label>Task type
+        <select id="task">
+          <option value="coding">Coding</option>
+          <option value="reasoning">Reasoning / analysis</option>
+          <option value="writing">Writing</option>
+          <option value="extraction">Summarization / extraction</option>
+          <option value="vision">Vision (images)</option>
+          <option value="speed">Fast chat / low latency</option>
+        </select>
+      </label>
+      <label class="costonly">Quality ↔ cost
+        <input type="range" id="slider" min="0" max="100" value="30">
+        <span class="hint"><span>Best quality</span><span>Lowest cost</span></span>
+      </label>
+    </div>
+    <h3>Optional details <small>(all can be left blank)</small></h3>
+    <div class="grid">
+      <label>Input tokens per request <input type="number" id="inTok" min="0" placeholder="e.g. 2000"></label>
+      <label>Output tokens per request <input type="number" id="outTok" min="0" placeholder="e.g. 500"></label>
+      <label>Requests per month <input type="number" id="volume" min="0" placeholder="e.g. 10000"></label>
+      <label>Minimum context window (tokens) <input type="number" id="minCtx" min="0" placeholder="e.g. 100000"></label>
+      <label class="check"><input type="checkbox" id="needVision"> Vision needed</label>
+    </div>
+    <p class="hint" id="modeHint"></p>
+  </div>
+  <div id="usage" class="panel"></div>
+  <div id="results"></div>
+</section>
+
+<section id="view-dashboard" class="view" hidden>
+  <div class="panel">
+    <div class="grid">
+      <label>Search <input type="search" id="q" placeholder="name or id"></label>
+      <label>Tier
+        <select id="tierFilter"><option value="">All</option><option>flagship</option><option>balanced</option><option>fast-cheap</option></select>
+      </label>
+      <label class="check"><input type="checkbox" id="fVision"> Vision only</label>
+      <label class="check"><input type="checkbox" id="fRated"> Rated only</label>
+      <button id="compareBtn">Compare selected (<span id="cmpCount">0</span>)</button>
+    </div>
+  </div>
+  <div id="compare"></div>
+  <div class="table-wrap"><table id="table"></table></div>
+</section>
+
+<section id="view-tips" class="view" hidden>
+  <div class="panel tips">
+    <h2>Token-cost tips</h2>
+    <ul>
+      <li><b>Output costs 3–5× input.</b> Ask for concise answers, set <code>max_tokens</code>, and request structured output (JSON) instead of prose.</li>
+      <li><b>Cache the prefix.</b> Put stable instructions and documents first; prompt caching typically discounts repeated input by 50–90%.</li>
+      <li><b>Route by difficulty.</b> Use a fast-cheap model for classification and extraction; escalate to a flagship only when needed.</li>
+      <li><b>Trim context.</b> Send only relevant chunks (retrieval) rather than whole documents. Long prompts cost money and can reduce accuracy.</li>
+      <li><b>Mind reasoning models.</b> They bill hidden thinking tokens as output; budget 2–10× more output than the visible answer.</li>
+      <li><b>Batch where latency allows.</b> Batch APIs are commonly ~50% cheaper.</li>
+      <li><b>Keep conversations short.</b> Each turn resends history; summarize or truncate old turns.</li>
+      <li><b>Measure.</b> Log tokens per request and watch % of context used; above ~70% quality and cost both suffer.</li>
+      <li><b>Even if cost isn't your concern,</b> fewer tokens means lower latency and rate-limit headroom.</li>
+    </ul>
+  </div>
+</section>
+</main>
+<footer id="footer"></footer>
+<script src="app.js"></script>
+</body>
+</html>
