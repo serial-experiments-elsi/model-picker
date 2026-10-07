@@ -272,12 +272,8 @@ function renderRecommender() {
     : "Ranking blends quality and cost using the Quality ↔ cost slider." + (hasTok ? "" : " Prices shown per 1M tokens.");
   // usage panel
   const perMonth = tokens * s.volume;
-  $("usage").innerHTML = `<h3>Your token usage</h3>` + (hasTok
-    ? `<div class="grid"><div><b>${fmt(tokens)}</b> tokens / request<br><span class="hint">${fmt(s.inTok)} in + ${fmt(s.outTok)} out</span></div>` +
-      (s.volume ? `<div><b>${fmt(perMonth)}</b> tokens / month<br><span class="hint">${s.volume.toLocaleString()} requests</span></div>` : "") +
-      `<div><b>${c.length ? (100 * tokens / Math.max(...c.map(m => m.ctx))).toFixed(2) : "–"}%</b> – <b>${c.length ? (100 * tokens / Math.min(...c.map(m => m.ctx))).toFixed(1) : "–"}%</b> of context window<br><span class="hint">across matching models</span></div></div>`
-    : `<p class="hint">Enter input/output tokens to see tokens per request, per month and % of context used. Optional.</p>`);
-  if (!c.length) { $("results").innerHTML = `<div class="panel">No models match these constraints. Loosen the minimum context or vision requirement.</div>`; return; }
+  $("usage").innerHTML = "";
+  if (!c.length) { $("results").innerHTML = `<div class="panel">No models match these constraints. No models have a rating for this task.</div>`; return; }
   const wo = s.ignore ? 0 : s.slider;
   const overall = best(c, m => scoreWith(m, wo));
   const cards = [card("Best overall", overall, s, hasTok)];
