@@ -41,3 +41,6 @@ footer{padding:1rem;text-align:center;color:var(--mut);font-size:.8rem}
 @media(max-width:600px){header{padding:.5rem}.header-right{margin-left:0}}
 .grid .wide{grid-column:1/-1}
 textarea{width:100%;font:inherit;padding:.6rem;border-radius:8px;border:1px solid var(--border,#8884);background:transparent;color:inherit;resize:vertical}
+
+.linkbtn{background:none;border:0;padding:0;color:inherit;text-decoration:underline;cursor:pointer;font:inherit;opacity:.8}
+[hidden]{display:none!important}

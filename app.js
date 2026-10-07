@@ -194,12 +194,13 @@ document.querySelectorAll("#tabs button").forEach(b => b.onclick = () => {
   document.querySelectorAll("#tabs button").forEach(x => x.classList.toggle("active", x === b));
   document.querySelectorAll(".view").forEach(v => v.hidden = v.id !== "view-" + b.dataset.view);
 });
-$("task").addEventListener("change", () => { taskManual = true; });
+$("task").addEventListener("change", () => { taskManual = true; $("prompt").dispatchEvent(new Event("input")); });
+$("changeTask").onclick = () => { $("taskWrap").hidden = !$("taskWrap").hidden; };
 $("prompt").addEventListener("input", () => {
   const t = $("prompt").value.trim(), k = t && detectTask(t);
   if (!taskManual && k) $("task").value = k;
   $("detected").textContent = !t ? "Type a prompt and I'll detect the task type."
-    : k ? "Detected: " + TASK_LABEL[k] + (taskManual ? " (you set it manually)" : "") : "Couldn't tell — pick a task type.";
+    : k ? "Detected: " + TASK_LABEL[k] + (taskManual ? " (set manually)" : "") : "Couldn't tell — click change to pick one.";
   renderRecommender();
 });
 ["task","slider","inTok","outTok","volume","minCtx","needVision"].forEach(id => $(id).addEventListener("input", renderRecommender));

@@ -49,6 +49,9 @@ footer{padding:1rem;text-align:center;color:var(--mut);font-size:.8rem}
 .grid .wide{grid-column:1/-1}
 textarea{width:100%;font:inherit;padding:.6rem;border-radius:8px;border:1px solid var(--border,#8884);background:transparent;color:inherit;resize:vertical}
 
+.linkbtn{background:none;border:0;padding:0;color:inherit;text-decoration:underline;cursor:pointer;font:inherit;opacity:.8}
+[hidden]{display:none!important}
+
 </style>
 </head>
 <body>
@@ -76,9 +79,9 @@ textarea{width:100%;font:inherit;padding:.6rem;border-radius:8px;border:1px soli
     <div class="grid">
       <label class="wide">Describe your task
         <textarea id="prompt" rows="4" placeholder="e.g. Refactor a 2,000-line Python module and add unit tests… or: summarize 50 PDF invoices into a table"></textarea>
-        <span class="hint"><span id="detected">Type a prompt and I'll detect the task type.</span></span>
+        <span class="hint"><span id="detected">Type a prompt and I'll detect the task type.</span> <button type="button" id="changeTask" class="linkbtn">change</button></span>
       </label>
-      <label>Task type (auto-detected, editable)
+      <label id="taskWrap" hidden>Task type (override)
         <select id="task">
           <option value="coding">Coding</option>
           <option value="reasoning">Reasoning / analysis</option>
@@ -339,12 +342,13 @@ document.querySelectorAll("#tabs button").forEach(b => b.onclick = () => {
   document.querySelectorAll("#tabs button").forEach(x => x.classList.toggle("active", x === b));
   document.querySelectorAll(".view").forEach(v => v.hidden = v.id !== "view-" + b.dataset.view);
 });
-$("task").addEventListener("change", () => { taskManual = true; });
+$("task").addEventListener("change", () => { taskManual = true; $("prompt").dispatchEvent(new Event("input")); });
+$("changeTask").onclick = () => { $("taskWrap").hidden = !$("taskWrap").hidden; };
 $("prompt").addEventListener("input", () => {
   const t = $("prompt").value.trim(), k = t && detectTask(t);
   if (!taskManual && k) $("task").value = k;
   $("detected").textContent = !t ? "Type a prompt and I'll detect the task type."
-    : k ? "Detected: " + TASK_LABEL[k] + (taskManual ? " (you set it manually)" : "") : "Couldn't tell — pick a task type.";
+    : k ? "Detected: " + TASK_LABEL[k] + (taskManual ? " (set manually)" : "") : "Couldn't tell — click change to pick one.";
   renderRecommender();
 });
 ["task","slider","inTok","outTok","volume","minCtx","needVision"].forEach(id => $(id).addEventListener("input", renderRecommender));
