@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Model Picker</title>
+<style>
+:root{--bg:#f6f7f9;--fg:#1c2128;--panel:#fff;--bd:#d8dce2;--mut:#667;--acc:#2563eb;--ok:#15803d;--warn:#b45309}
+[data-theme=dark]{--bg:#0f1318;--fg:#e6e9ee;--panel:#181d24;--bd:#2c333d;--mut:#98a2b3;--acc:#60a5fa;--ok:#4ade80;--warn:#fbbf24}
+*{box-sizing:border-box}
+body{margin:0;font:15px/1.5 system-ui,sans-serif;background:var(--bg);color:var(--fg)}
+header{display:flex;flex-wrap:wrap;gap:.75rem 1.25rem;align-items:center;padding:.75rem 1rem;background:var(--panel);border-bottom:1px solid var(--bd)}
+h1{font-size:1.2rem;margin:0}
+h2,h3{margin:.2rem 0 .6rem}h3 small{color:var(--mut);font-weight:400}
+nav,.header-right{display:flex;gap:.4rem;align-items:center;flex-wrap:wrap}
+.header-right{margin-left:auto}
+button,select,input{font:inherit;color:inherit;background:var(--panel);border:1px solid var(--bd);border-radius:6px;padding:.4rem .6rem}
+button{cursor:pointer}button.active{background:var(--acc);color:#fff;border-color:var(--acc)}
+.toggle{display:flex;gap:.4rem;align-items:center;cursor:pointer}
+.toggle input,.check input{width:auto}
+main{max-width:1200px;margin:0 auto;padding:1rem}
+#status{padding:.3rem 1rem;color:var(--mut);font-size:.85rem}
+.panel{background:var(--panel);border:1px solid var(--bd);border-radius:10px;padding:1rem;margin-bottom:1rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.8rem;align-items:end}
+label{display:flex;flex-direction:column;gap:.25rem;font-size:.9rem}
+label.check{flex-direction:row;align-items:center;gap:.4rem}
+.hint{color:var(--mut);font-size:.85rem;display:flex;justify-content:space-between}
+p.hint{display:block}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+.card{background:var(--panel);border:1px solid var(--bd);border-radius:10px;padding:1rem}
+.card .label{font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;color:var(--acc);font-weight:700}
+.card h3{margin:.2rem 0}
+.card dl{display:grid;grid-template-columns:auto 1fr;gap:.15rem .8rem;margin:.5rem 0}
+.card dt{color:var(--mut)}.card dd{margin:0}
+.badge{display:inline-block;padding:0 .5rem;border-radius:99px;border:1px solid var(--bd);font-size:.75rem;color:var(--mut)}
+.bar{height:6px;background:var(--bd);border-radius:3px;overflow:hidden;min-width:60px}
+.bar i{display:block;height:100%;background:var(--acc)}
+.bar.hot i{background:var(--warn)}
+.table-wrap{overflow-x:auto;background:var(--panel);border:1px solid var(--bd);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:.88rem}
+th,td{padding:.4rem .6rem;border-bottom:1px solid var(--bd);text-align:left;white-space:nowrap}
+th{cursor:pointer;user-select:none;position:sticky;top:0;background:var(--panel)}
+td.n,th.n{text-align:right}
+.tips li{margin:.5rem 0}
+code{background:var(--bg);padding:0 .3rem;border-radius:4px}
+footer{padding:1rem;text-align:center;color:var(--mut);font-size:.8rem}
+.ign .costonly{opacity:.4;pointer-events:none}
+@media(max-width:600px){header{padding:.5rem}.header-right{margin-left:0}}
+
+</style>
+</head>
+<body>
+<header>
+  <h1>Model Picker</h1>
+  <nav id="tabs">
+    <button data-view="recommender" class="active">Recommender</button>
+    <button data-view="dashboard">Dashboard</button>
+    <button data-view="tips">Token tips</button>
+  </nav>
+  <div class="header-right">
+    <label class="toggle" title="Removes cost from ranking and hides $ estimates; token usage is still shown">
+      <input type="checkbox" id="ignoreCost"> My company pays / ignore cost
+    </label>
+    <button id="refresh">Refresh</button>
+    <button id="theme" aria-label="Toggle theme">◐</button>
+  </div>
+</header>
+<div id="status" role="status"></div>
+
+<main>
+<section id="view-recommender" class="view">
+  <div class="panel">
+    <h2>What do you need?</h2>
+    <div class="grid">
+      <label>Task type
+        <select id="task">
+          <option value="coding">Coding</option>
+          <option value="reasoning">Reasoning / analysis</option>
+          <option value="writing">Writing</option>
+          <option value="extraction">Summarization / extraction</option>
+          <option value="vision">Vision (images)</option>
+          <option value="speed">Fast chat / low latency</option>
+        </select>
+      </label>
+      <label class="costonly">Quality ↔ cost
+        <input type="range" id="slider" min="0" max="100" value="30">
+        <span class="hint"><span>Best quality</span><span>Lowest cost</span></span>
+      </label>
+    </div>
+    <h3>Optional details <small>(all can be left blank)</small></h3>
+    <div class="grid">
+      <label>Input tokens per request <input type="number" id="inTok" min="0" placeholder="e.g. 2000"></label>
+      <label>Output tokens per request <input type="number" id="outTok" min="0" placeholder="e.g. 500"></label>
+      <label>Requests per month <input type="number" id="volume" min="0" placeholder="e.g. 10000"></label>
+      <label>Minimum context window (tokens) <input type="number" id="minCtx" min="0" placeholder="e.g. 100000"></label>
+      <label class="check"><input type="checkbox" id="needVision"> Vision needed</label>
+    </div>
+    <p class="hint" id="modeHint"></p>
+  </div>
+  <div id="usage" class="panel"></div>
+  <div id="results"></div>
+</section>
+
+<section id="view-dashboard" class="view" hidden>
+  <div class="panel">
+    <div class="grid">
+      <label>Search <input type="search" id="q" placeholder="name or id"></label>
+      <label>Tier
+        <select id="tierFilter"><option value="">All</option><option>flagship</option><option>balanced</option><option>fast-cheap</option></select>
+      </label>
+      <label class="check"><input type="checkbox" id="fVision"> Vision only</label>
+      <label class="check"><input type="checkbox" id="fRated"> Rated only</label>
+      <button id="compareBtn">Compare selected (<span id="cmpCount">0</span>)</button>
+    </div>
+  </div>
+  <div id="compare"></div>
+  <div class="table-wrap"><table id="table"></table></div>
+</section>
+
+<section id="view-tips" class="view" hidden>
+  <div class="panel tips">
+    <h2>Token-cost tips</h2>
+    <ul>
+      <li><b>Output costs 3–5× input.</b> Ask for concise answers, set <code>max_tokens</code>, and request structured output (JSON) instead of prose.</li>
+      <li><b>Cache the prefix.</b> Put stable instructions and documents first; prompt caching typically discounts repeated input by 50–90%.</li>
+      <li><b>Route by difficulty.</b> Use a fast-cheap model for classification and extraction; escalate to a flagship only when needed.</li>
+      <li><b>Trim context.</b> Send only relevant chunks (retrieval) rather than whole documents. Long prompts cost money and can reduce accuracy.</li>
+      <li><b>Mind reasoning models.</b> They bill hidden thinking tokens as output; budget 2–10× more output than the visible answer.</li>
+      <li><b>Batch where latency allows.</b> Batch APIs are commonly ~50% cheaper.</li>
+      <li><b>Keep conversations short.</b> Each turn resends history; summarize or truncate old turns.</li>
+      <li><b>Measure.</b> Log tokens per request and watch % of context used; above ~70% quality and cost both suffer.</li>
+      <li><b>Even if cost isn't your concern,</b> fewer tokens means lower latency and rate-limit headroom.</li>
+    </ul>
+  </div>
+</section>
+</main>
+<footer id="footer"></footer>
+<script>window.__EMBED={"models-curated.json": {"_note": "Edit freely. Ratings 1-5 (0 = no capability). Key = OpenRouter model id. tier: flagship|balanced|fast-cheap.", "models": {"anthropic/claude-opus-4.1": {"tier": "flagship", "ratings": {"coding": 5, "reasoning": 5, "writing": 5, "extraction": 4, "vision": 4, "speed": 2}, "notes": "Top-tier quality for hard coding/agentic work; slow and pricey."}, "anthropic/claude-sonnet-4": {"tier": "balanced", "ratings": {"coding": 5, "reasoning": 4, "writing": 5, "extraction": 4, "vision": 4, "speed": 3}, "notes": "Excellent coding/writing default."}, "anthropic/claude-3.5-haiku": {"tier": "fast-cheap", "ratings": {"coding": 3, "reasoning": 3, "writing": 4, "extraction": 4, "vision": 0, "speed": 5}, "notes": "Quick, inexpensive text tasks."}, "openai/gpt-4o": {"tier": "balanced", "ratings": {"coding": 4, "reasoning": 4, "writing": 4, "extraction": 4, "vision": 4, "speed": 4}, "notes": "Solid all-rounder."}, "openai/gpt-4o-mini": {"tier": "fast-cheap", "ratings": {"coding": 3, "reasoning": 3, "writing": 3, "extraction": 4, "vision": 3, "speed": 5}, "notes": "Cheap extraction and chat."}, "openai/gpt-4.1": {"tier": "balanced", "ratings": {"coding": 5, "reasoning": 4, "writing": 4, "extraction": 5, "vision": 4, "speed": 4}, "notes": "Strong coding and instruction following; 1M context."}, "openai/gpt-4.1-mini": {"tier": "fast-cheap", "ratings": {"coding": 4, "reasoning": 3, "writing": 4, "extraction": 4, "vision": 4, "speed": 5}, "notes": "Great value; long context."}, "openai/o3": {"tier": "flagship", "ratings": {"coding": 5, "reasoning": 5, "writing": 3, "extraction": 4, "vision": 4, "speed": 2}, "notes": "Deep reasoning; uses hidden reasoning tokens."}, "openai/o4-mini": {"tier": "balanced", "ratings": {"coding": 4, "reasoning": 5, "writing": 3, "extraction": 4, "vision": 4, "speed": 3}, "notes": "Cheap reasoning; reasoning tokens add output cost."}, "google/gemini-2.5-pro": {"tier": "flagship", "ratings": {"coding": 5, "reasoning": 5, "writing": 4, "extraction": 5, "vision": 5, "speed": 3}, "notes": "Best for huge documents and multimodal input."}, "google/gemini-2.5-flash": {"tier": "fast-cheap", "ratings": {"coding": 4, "reasoning": 4, "writing": 4, "extraction": 5, "vision": 4, "speed": 5}, "notes": "Fast, cheap, 1M context."}, "meta-llama/llama-3.3-70b-instruct": {"tier": "fast-cheap", "ratings": {"coding": 3, "reasoning": 3, "writing": 3, "extraction": 3, "vision": 0, "speed": 4}, "notes": "Open weights, very cheap."}, "deepseek/deepseek-chat": {"tier": "fast-cheap", "ratings": {"coding": 4, "reasoning": 4, "writing": 3, "extraction": 3, "vision": 0, "speed": 3}, "notes": "Strong value for coding."}, "deepseek/deepseek-r1": {"tier": "balanced", "ratings": {"coding": 4, "reasoning": 5, "writing": 3, "extraction": 3, "vision": 0, "speed": 2}, "notes": "Cheap reasoning; verbose output."}, "mistralai/mistral-large": {"tier": "balanced", "ratings": {"coding": 3, "reasoning": 4, "writing": 4, "extraction": 3, "vision": 0, "speed": 3}, "notes": "Good multilingual writing."}, "mistralai/mistral-small-3.2-24b-instruct": {"tier": "fast-cheap", "ratings": {"coding": 3, "reasoning": 2, "writing": 3, "extraction": 3, "vision": 2, "speed": 5}, "notes": "Very cheap small model."}, "qwen/qwen-2.5-72b-instruct": {"tier": "fast-cheap", "ratings": {"coding": 4, "reasoning": 3, "writing": 3, "extraction": 3, "vision": 0, "speed": 4}, "notes": "Capable open model; short context."}, "x-ai/grok-4": {"tier": "flagship", "ratings": {"coding": 4, "reasoning": 5, "writing": 4, "extraction": 4, "vision": 3, "speed": 2}, "notes": "Strong reasoning."}}}, "models-snapshot.json": {"_note": "Offline fallback in OpenRouter /api/v1/models shape. Prices are approximate and may be stale; Refresh pulls live data.", "data": [{"id": "anthropic/claude-opus-4.1", "name": "Claude Opus 4.1", "context_length": 200000, "pricing": {"prompt": "1.5e-05", "completion": "7.5e-05"}, "architecture": {"input_modalities": ["text", "image"]}}, {"id": "anthropic/claude-sonnet-4", "name": "Claude Sonnet 4", "context_length": 200000, "pricing": {"prompt": "3e-06", "completion": "1.5e-05"}, "architecture": {"input_modalities": ["text", "image"]}}, {"id": "anthropic/claude-3.5-haiku", "name": "Claude 3.5 Haiku", "context_length": 200000, "pricing": {"prompt": "8.000000000000001e-07", "completion": "4e-06"}, "architecture": {"input_modalities": ["text"]}}, {"id": "openai/gpt-4o", "name": "GPT-4o", "context_length": 128000, "pricing": {"prompt": "2.5e-06", "completion": "1e-05"}, "architecture": {"input_modalities": ["text", "image"]}}, {"id": "openai/gpt-4o-mini", "name": "GPT-4o mini", "context_length": 128000, "pricing": {"prompt": "1.5e-07", "completion": "6e-07"}, "architecture": {"input_modalities": ["text", "image"]}}, {"id": "openai/gpt-4.1", "name": "GPT-4.1", "context_length": 1047576, "pricing": {"prompt": "2e-06", "completion": "8e-06"}, "architecture": {"input_modalities": ["text", "image"]}}, {"id": "openai/gpt-4.1-mini", "name": "GPT-4.1 mini", "context_length": 1047576, "pricing": {"prompt": "4.0000000000000003e-07", "completion": "1.6000000000000001e-06"}, "architecture": {"input_modalities": ["text", "image"]}}, {"id": "openai/o3", "name": "o3", "context_length": 200000, "pricing": {"prompt": "2e-06", "completion": "8e-06"}, "architecture": {"input_modalities": ["text", "image"]}}, {"id": "openai/o4-mini", "name": "o4-mini", "context_length": 200000, "pricing": {"prompt": "1.1e-06", "completion": "4.4e-06"}, "architecture": {"input_modalities": ["text", "image"]}}, {"id": "google/gemini-2.5-pro", "name": "Gemini 2.5 Pro", "context_length": 1048576, "pricing": {"prompt": "1.25e-06", "completion": "1e-05"}, "architecture": {"input_modalities": ["text", "image"]}}, {"id": "google/gemini-2.5-flash", "name": "Gemini 2.5 Flash", "context_length": 1048576, "pricing": {"prompt": "3e-07", "completion": "2.5e-06"}, "architecture": {"input_modalities": ["text", "image"]}}, {"id": "meta-llama/llama-3.3-70b-instruct", "name": "Llama 3.3 70B Instruct", "context_length": 131072, "pricing": {"prompt": "1.2e-07", "completion": "3e-07"}, "architecture": {"input_modalities": ["text"]}}, {"id": "deepseek/deepseek-chat", "name": "DeepSeek V3", "context_length": 163840, "pricing": {"prompt": "2.7e-07", "completion": "1.1e-06"}, "architecture": {"input_modalities": ["text"]}}, {"id": "deepseek/deepseek-r1", "name": "DeepSeek R1", "context_length": 163840, "pricing": {"prompt": "5.5e-07", "completion": "2.2e-06"}, "architecture": {"input_modalities": ["text"]}}, {"id": "mistralai/mistral-large", "name": "Mistral Large", "context_length": 128000, "pricing": {"prompt": "2e-06", "completion": "6e-06"}, "architecture": {"input_modalities": ["text"]}}, {"id": "mistralai/mistral-small-3.2-24b-instruct", "name": "Mistral Small 3.2 24B", "context_length": 131072, "pricing": {"prompt": "5.0000000000000004e-08", "completion": "1.0000000000000001e-07"}, "architecture": {"input_modalities": ["text", "image"]}}, {"id": "qwen/qwen-2.5-72b-instruct", "name": "Qwen 2.5 72B Instruct", "context_length": 32768, "pricing": {"prompt": "1.2e-07", "completion": "3.9e-07"}, "architecture": {"input_modalities": ["text"]}}, {"id": "x-ai/grok-4", "name": "Grok 4", "context_length": 256000, "pricing": {"prompt": "3e-06", "completion": "1.5e-05"}, "architecture": {"input_modalities": ["text", "image"]}}, {"id": "some-lab/unrated-demo-model", "name": "Unrated Demo Model", "context_length": 32000, "pricing": {"prompt": "5e-07", "completion": "1.5e-06"}, "architecture": {"input_modalities": ["text"]}}]}};</script>
+<script>
+(() => {
+const API = "https://openrouter.ai/api/v1/models";
+const CACHE_KEY = "modelPicker.cache.v1", TTL = 6 * 3600 * 1000;
+const $ = id => document.getElementById(id);
+const RK = ["coding", "reasoning", "writing", "extraction", "vision", "speed"];
+const TASK_LABEL = {coding:"Coding",reasoning:"Reasoning",writing:"Writing",extraction:"Summarization/extraction",vision:"Vision",speed:"Speed"};
+const HEUR = { // fallback ratings by price tier
+  flagship:{coding:4,reasoning:4,writing:4,extraction:4,vision:4,speed:2},
+  balanced:{coding:3,reasoning:3,writing:3,extraction:3,vision:3,speed:3},
+  "fast-cheap":{coding:2,reasoning:2,writing:3,extraction:3,vision:2,speed:5}};
+let models = [], source = "", sortKey = "name", sortDir = 1;
+const selected = new Set();
+const state = () => ({
+  task: $("task").value, slider: +$("slider").value / 100,
+  inTok: +$("inTok").value || 0, outTok: +$("outTok").value || 0, volume: +$("volume").value || 0,
+  minCtx: +$("minCtx").value || 0, needVision: $("needVision").checked, ignore: $("ignoreCost").checked});
+
+// ---------- data ----------
+async function getJSON(url, ms = 8000) {
+  if (window.__EMBED && window.__EMBED[url]) return window.__EMBED[url];
+  const c = new AbortController(), t = setTimeout(() => c.abort(), ms);
+  try { const r = await fetch(url, {signal: c.signal}); if (!r.ok) throw new Error(r.status); return await r.json(); }
+  finally { clearTimeout(t); }
+}
+function readCache() { try { return JSON.parse(localStorage.getItem(CACHE_KEY)); } catch { return null; } }
+async function loadRaw(force) {
+  const cache = readCache();
+  if (!force && cache && Date.now() - cache.t < TTL) return {data: cache.data, src: `cached live data (${ago(cache.t)})`};
+  try {
+    const j = await getJSON(API);
+    try { localStorage.setItem(CACHE_KEY, JSON.stringify({t: Date.now(), data: j})); } catch {}
+    return {data: j, src: "live OpenRouter data (just now)"};
+  } catch {}
+  if (cache) return {data: cache.data, src: `stale cached data (${ago(cache.t)}); live fetch failed`};
+  const snap = await getJSON("models-snapshot.json");
+  return {data: snap, src: "offline snapshot (live fetch failed; prices may be outdated)"};
+}
+const ago = t => { const m = Math.round((Date.now() - t) / 60000); return m < 60 ? `${m} min ago` : `${(m / 60).toFixed(1)} h ago`; };
+function tierFor(blended) { return blended >= 10 ? "flagship" : blended >= 1 ? "balanced" : "fast-cheap"; }
+function build(raw, curated) {
+  return (raw.data || []).map(m => {
+    const pIn = parseFloat(m.pricing?.prompt) * 1e6, pOut = parseFloat(m.pricing?.completion) * 1e6;
+    if (!(pIn >= 0) || !(pOut >= 0) || !m.context_length) return null; // skips dynamic/unpriced routers
+    const vision = (m.architecture?.input_modalities || []).includes("image");
+    const c = curated[m.id], blended = (3 * pIn + pOut) / 4;
+    const tier = c?.tier || tierFor(blended);
+    const base = HEUR[tier];
+    const ratings = {};
+    RK.forEach(k => ratings[k] = c?.ratings?.[k] ?? (k === "vision" ? (vision ? base.vision : 0) : base[k]));
+    if (!vision) ratings.vision = 0;
+    return {id: m.id, name: m.name || m.id, ctx: m.context_length, pIn, pOut, blended, vision, tier, ratings,
+      notes: c?.notes || "", rated: !!c};
+  }).filter(Boolean);
+}
+async function init(force) {
+  $("status").textContent = "Loading models…";
+  let curated = {};
+  try { curated = (await getJSON("models-curated.json")).models || {}; }
+  catch { $("status").textContent = "Could not load models-curated.json (opened via file://? use `python3 -m http.server`). Using heuristic ratings."; }
+  try {
+    const {data, src} = await loadRaw(force);
+    models = build(data, curated); source = src;
+    const rated = models.filter(m => m.rated).length;
+    $("footer").textContent = `${models.length} models · ${rated} with curated ratings · source: ${src}`;
+    if (!$("status").textContent.startsWith("Could")) $("status").textContent = "";
+  } catch (e) { $("status").textContent = "Failed to load any model data: " + e.message; return; }
+  render();
+}
+
+// ---------- scoring ----------
+const fmt = n => n >= 1e9 ? (n / 1e9).toFixed(1) + "B" : n >= 1e6 ? (n / 1e6).toFixed(1) + "M" : n >= 1e3 ? (n / 1e3).toFixed(n < 1e4 ? 1 : 0) + "K" : String(Math.round(n));
+const usd = n => n === 0 ? "$0" : n < 0.01 ? "$" + n.toFixed(4) : n < 100 ? "$" + n.toFixed(2) : "$" + Math.round(n).toLocaleString();
+function quality(m, task) {
+  const t = m.ratings[task] || 0, s = m.ratings.speed;
+  return task === "speed" ? t / 5 : (0.85 * t + 0.15 * s) / 5;
+}
+function recommend(s) {
+  const tokens = s.inTok + s.outTok, hasTok = tokens > 0;
+  let c = models.filter(m => m.ctx >= s.minCtx && m.ctx >= tokens && (!(s.needVision || s.task === "vision") || m.vision) && m.ratings[s.task] > 0);
+  if (!c.length) return {c, hasTok, tokens};
+  c.forEach(m => {
+    m.q = quality(m, s.task);
+    m.ctxPct = hasTok ? tokens / m.ctx : 0;
+    m.reqCost = hasTok ? (s.inTok * m.pIn + s.outTok * m.pOut) / 1e6 : null;
+    m.basis = hasTok ? m.reqCost : m.blended;
+    m.eff = m.q * (0.7 + 0.3 * m.ratings.speed / 5) / (1 + m.ctxPct);
+  });
+  const order = [...c].sort((a, b) => a.basis - b.basis);
+  order.forEach((m, i) => m.costScore = c.length > 1 ? 1 - i / (c.length - 1) : 1);
+  const maxEff = Math.max(...c.map(m => m.eff));
+  c.forEach(m => m.effRel = Math.round(100 * m.eff / maxEff));
+  return {c, hasTok, tokens};
+}
+const scoreWith = (m, w) => (1 - w) * m.q + w * m.costScore;
+const best = (arr, f) => arr.reduce((a, b) => (f(b) > f(a) || (f(b) === f(a) && b.ctx > a.ctx)) ? b : a);
+
+// ---------- recommender ----------
+function card(label, m, s, hasTok) {
+  const rows = [["Quality fit", `${(m.q * 5).toFixed(1)} / 5 ${m.rated ? "" : "<span class=badge>heuristic</span>"}`], ["Tier", m.tier], ["Context", fmt(m.ctx)]];
+  if (hasTok) {
+    rows.push(["Context used", `${(m.ctxPct * 100).toFixed(m.ctxPct < .01 ? 2 : 1)}%<div class="bar ${m.ctxPct > .7 ? "hot" : ""}"><i style="width:${Math.min(100, m.ctxPct * 100)}%"></i></div>`]);
+  }
+  rows.push(["Usage efficiency", `${m.effRel}/100<div class="bar"><i style="width:${m.effRel}%"></i></div>`]);
+  if (!s.ignore) {
+    rows.push(["Price / 1M tokens", `${usd(m.pIn)} in · ${usd(m.pOut)} out`]);
+    if (hasTok) {
+      rows.push(["Per request", usd(m.reqCost)]);
+      if (s.volume) rows.push(["Per month", usd(m.reqCost * s.volume)]);
+    }
+  }
+  return `<div class="card"><div class="label">${label}</div><h3>${esc(m.name)}</h3><div class="hint">${esc(m.id)}</div>
+  <dl>${rows.map(r => `<dt>${r[0]}</dt><dd>${r[1]}</dd>`).join("")}</dl><p>${esc(m.notes)}</p></div>`;
+}
+function renderRecommender() {
+  const s = state(), {c, hasTok, tokens} = recommend(s);
+  document.body.classList.toggle("ign", s.ignore);
+  $("modeHint").textContent = s.ignore
+    ? "Cost is ignored: ranking uses quality/fit only and no $ figures are shown. Token usage is still tracked."
+    : hasTok ? "Ranking blends quality and cost using the slider."
+    : "No token counts entered: ranking is quality/fit first; price is only a light tiebreaker. Prices shown per 1M tokens.";
+  // usage panel
+  const perMonth = tokens * s.volume;
+  $("usage").innerHTML = `<h3>Your token usage</h3>` + (hasTok
+    ? `<div class="grid"><div><b>${fmt(tokens)}</b> tokens / request<br><span class="hint">${fmt(s.inTok)} in + ${fmt(s.outTok)} out</span></div>` +
+      (s.volume ? `<div><b>${fmt(perMonth)}</b> tokens / month<br><span class="hint">${s.volume.toLocaleString()} requests</span></div>` : "") +
+      `<div><b>${c.length ? (100 * tokens / Math.max(...c.map(m => m.ctx))).toFixed(2) : "–"}%</b> – <b>${c.length ? (100 * tokens / Math.min(...c.map(m => m.ctx))).toFixed(1) : "–"}%</b> of context window<br><span class="hint">across matching models</span></div></div>`
+    : `<p class="hint">Enter input/output tokens to see tokens per request, per month and % of context used. Optional.</p>`);
+  if (!c.length) { $("results").innerHTML = `<div class="panel">No models match these constraints. Loosen the minimum context or vision requirement.</div>`; return; }
+  const wo = s.ignore ? 0 : 0.1;
+  const overall = best(c, m => scoreWith(m, wo));
+  const cards = [card("Best overall", overall, s, hasTok)];
+  if (s.ignore) {
+    cards.push(card("Most usage-efficient", best(c, m => m.eff), s, hasTok));
+    const ok = c.filter(m => m.ratings[s.task] >= 3);
+    if (ok.length) cards.push(card("Fastest acceptable", best(ok, m => m.ratings.speed * 10 + m.q), s, hasTok));
+  } else {
+    const wv = hasTok ? Math.max(s.slider, 0.4) : 0.25;
+    cards.push(card("Best value", best(c, m => scoreWith(m, wv)), s, hasTok));
+    const ok = c.filter(m => m.ratings[s.task] >= 3);
+    if (ok.length) cards.push(card("Cheapest acceptable", best(ok, m => -m.basis * 1e6 + m.q), s, hasTok));
+  }
+  const w = s.ignore ? 0 : hasTok ? s.slider : 0.1 * s.slider;
+  const top = [...c].sort((a, b) => scoreWith(b, w) - scoreWith(a, w) || b.ctx - a.ctx).slice(0, 10);
+  $("results").innerHTML = `<div class="cards">${cards.join("")}</div>
+  <h3 style="margin-top:1rem">Top 10 for your settings</h3><div class="table-wrap"><table><thead><tr><th>#</th><th>Model</th><th>Quality</th>${hasTok ? "<th class=n>Context used</th>" : ""}<th class=n>Efficiency</th>${s.ignore ? "" : `<th class=n>${hasTok ? "Per request" : "$/1M (blended)"}</th>${hasTok && s.volume ? "<th class=n>Per month</th>" : ""}`}</tr></thead><tbody>
+  ${top.map((m, i) => `<tr><td>${i + 1}</td><td>${esc(m.name)}${m.rated ? "" : " <span class=badge>heuristic</span>"}</td><td>${(m.q * 5).toFixed(1)}</td>${hasTok ? `<td class=n>${(m.ctxPct * 100).toFixed(2)}%</td>` : ""}<td class=n>${m.effRel}</td>${s.ignore ? "" : `<td class=n>${usd(m.basis)}</td>${hasTok && s.volume ? `<td class=n>${usd(m.reqCost * s.volume)}</td>` : ""}`}</tr>`).join("")}
+  </tbody></table></div>`;
+}
+
+// ---------- dashboard ----------
+const COLS = [
+  ["name","Model"],["tier","Tier"],["ctx","Context",1],["pIn","In $/1M",1,"$"],["pOut","Out $/1M",1,"$"],
+  ...RK.map(k => ["r_" + k, TASK_LABEL[k], 1]), ["rated","Rated"]];
+const val = (m, k) => k.startsWith("r_") ? m.ratings[k.slice(2)] : k === "rated" ? +m.rated : m[k];
+function renderDashboard() {
+  const ign = $("ignoreCost").checked, q = $("q").value.toLowerCase(), tf = $("tierFilter").value;
+  let rows = models.filter(m => (!q || (m.name + m.id).toLowerCase().includes(q)) && (!tf || m.tier === tf) && (!$("fVision").checked || m.vision) && (!$("fRated").checked || m.rated));
+  rows.sort((a, b) => { const x = val(a, sortKey), y = val(b, sortKey); return (typeof x === "string" ? x.localeCompare(y) : x - y) * sortDir; });
+  const cols = COLS.filter(c => !(ign && c[3] === "$"));
+  $("table").innerHTML = `<thead><tr><th></th>${cols.map(c => `<th data-k="${c[0]}" class="${c[2] ? "n" : ""}">${c[1]}${sortKey === c[0] ? (sortDir > 0 ? " ▲" : " ▼") : ""}</th>`).join("")}</tr></thead><tbody>
+  ${rows.slice(0, 500).map(m => `<tr><td><input type=checkbox data-id="${esc(m.id)}" ${selected.has(m.id) ? "checked" : ""}></td>${cols.map(c => {
+    const v = val(m, c[0]);
+    return `<td class="${c[2] ? "n" : ""}">${c[0] === "name" ? `${esc(m.name)}<div class=hint>${esc(m.id)}</div>` : c[0] === "ctx" ? fmt(v) : c[3] ? usd(v) : c[0] === "rated" ? (v ? "✓" : "–") : v}</td>`; }).join("")}</tr>`).join("")}</tbody>`;
+  $("cmpCount").textContent = selected.size;
+}
+function renderCompare() {
+  const ms = models.filter(m => selected.has(m.id)), ign = $("ignoreCost").checked;
+  if (ms.length < 2) { $("compare").innerHTML = `<div class="panel">Select at least two models to compare.</div>`; return; }
+  const rows = [["Tier", m => m.tier], ["Context", m => fmt(m.ctx)], ["Vision", m => m.vision ? "yes" : "no"],
+    ...(ign ? [] : [["Input $/1M", m => usd(m.pIn)], ["Output $/1M", m => usd(m.pOut)]]),
+    ...RK.map(k => [TASK_LABEL[k], m => m.ratings[k]]), ["Notes", m => esc(m.notes)]];
+  $("compare").innerHTML = `<div class="table-wrap" style="margin-bottom:1rem"><table><thead><tr><th></th>${ms.map(m => `<th>${esc(m.name)}</th>`).join("")}</tr></thead><tbody>
+  ${rows.map(r => `<tr><th>${r[0]}</th>${ms.map(m => `<td style="white-space:normal">${r[1](m)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+}
+
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function render() { renderRecommender(); renderDashboard(); }
+
+// ---------- events ----------
+document.querySelectorAll("#tabs button").forEach(b => b.onclick = () => {
+  document.querySelectorAll("#tabs button").forEach(x => x.classList.toggle("active", x === b));
+  document.querySelectorAll(".view").forEach(v => v.hidden = v.id !== "view-" + b.dataset.view);
+});
+["task","slider","inTok","outTok","volume","minCtx","needVision"].forEach(id => $(id).addEventListener("input", renderRecommender));
+$("ignoreCost").addEventListener("change", () => { localStorage.setItem("modelPicker.ignore", $("ignoreCost").checked ? "1" : ""); render(); renderCompare(); });
+["q","tierFilter","fVision","fRated"].forEach(id => $(id).addEventListener("input", renderDashboard));
+$("table").addEventListener("click", e => {
+  const th = e.target.closest("th[data-k]");
+  if (th) { sortDir = sortKey === th.dataset.k ? -sortDir : (th.dataset.k === "name" || th.dataset.k === "tier" ? 1 : -1); sortKey = th.dataset.k; renderDashboard(); }
+  if (e.target.matches("input[data-id]")) { const id = e.target.dataset.id; e.target.checked ? selected.add(id) : selected.delete(id); $("cmpCount").textContent = selected.size; }
+});
+$("compareBtn").onclick = renderCompare;
+$("refresh").onclick = async () => { $("refresh").disabled = true; await init(true); $("refresh").disabled = false; };
+const setTheme = t => { document.documentElement.dataset.theme = t; localStorage.setItem("modelPicker.theme", t); };
+$("theme").onclick = () => setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
+setTheme(localStorage.getItem("modelPicker.theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
+$("ignoreCost").checked = !!localStorage.getItem("modelPicker.ignore");
+init(false);
+})();
+
+</script>
+</body>
+</html>

@@ -54,3 +54,10 @@ Sets `w = 0` everywhere and hides every $ figure (cards, tables, dashboard price
    ```
    Use 1-5 (vision 0 if unsupported; non-image models are forced to 0 anyway).
 3. Reload. Optionally refresh `models-snapshot.json` by saving the live API response to it.
+
+## Sharing with colleagues
+
+Run `python3 build.py` to produce **`model-picker.html`**: a single self-contained file
+(CSS, JS, curated ratings and offline snapshot all inlined). Email or drop it on a shared drive;
+it opens by double-click, no server needed. It still tries live OpenRouter prices when online.
+Rebuild after editing `models-curated.json` or the snapshot.

@@ -17,6 +17,7 @@ const state = () => ({
 
 // ---------- data ----------
 async function getJSON(url, ms = 8000) {
+  if (window.__EMBED && window.__EMBED[url]) return window.__EMBED[url];
   const c = new AbortController(), t = setTimeout(() => c.abort(), ms);
   try { const r = await fetch(url, {signal: c.signal}); if (!r.ok) throw new Error(r.status); return await r.json(); }
   finally { clearTimeout(t); }
