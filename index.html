@@ -28,20 +28,35 @@
     <div class="grid">
       <label class="wide">Describe your task
         <textarea id="prompt" rows="4" placeholder="e.g. Refactor a 2,000-line Python module and add unit tests… or: summarize 50 PDF invoices into a table"></textarea>
-        <span class="hint"><span id="detected">Type a prompt and I'll detect the task type.</span> <button type="button" id="changeTask" class="linkbtn">change</button></span>
+        <span class="hint"><span id="detected">Type a prompt and I'll detect the task type.</span></span>
       </label>
-      <label id="taskWrap" hidden>Task type (override)
+      <label id="taskWrap">Task type
         <select id="task">
-          <option value="coding">Coding</option>
-          <option value="reasoning">Reasoning / analysis</option>
-          <option value="writing">Writing</option>
-          <option value="extraction">Summarization / extraction</option>
-          <option value="vision">Vision (images)</option>
-          <option value="speed">Fast chat / low latency</option>
+          <optgroup label="General">
+            <option value="coding">Coding</option>
+            <option value="reasoning">Reasoning / analysis</option>
+            <option value="writing">Writing</option>
+            <option value="extraction">Summarization / extraction</option>
+            <option value="vision">Vision (images)</option>
+            <option value="speed">Fast chat / low latency</option>
+          </optgroup>
+          <optgroup label="Design &amp; UX">
+            <option value="uxdesign">UI / visual design review</option>
+            <option value="uxwriting">UX writing &amp; microcopy</option>
+            <option value="research">UX research synthesis</option>
+            <option value="frontend">Design → front-end code</option>
+          </optgroup>
+          <optgroup label="Other">
+            <option value="data">Data &amp; spreadsheets</option>
+            <option value="ideation">Brainstorming &amp; ideation</option>
+            <option value="agentic">Multi-step agent tasks</option>
+            <option value="longdoc">Long documents</option>
+            <option value="translation">Translation &amp; localization</option>
+          </optgroup>
         </select>
       </label>
       <label class="costonly">Quality ↔ cost
-        <input type="range" id="slider" min="0" max="100" value="30">
+        <input type="range" id="slider" min="0" max="100" value="50">
         <span class="hint"><span>Best quality</span><span>Lowest cost</span></span>
       </label>
     </div>

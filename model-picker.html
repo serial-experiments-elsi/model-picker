@@ -5,52 +5,138 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Model Picker</title>
 <style>
-:root{--bg:#f6f7f9;--fg:#1c2128;--panel:#fff;--bd:#d8dce2;--mut:#667;--acc:#2563eb;--ok:#15803d;--warn:#b45309}
-[data-theme=dark]{--bg:#0f1318;--fg:#e6e9ee;--panel:#181d24;--bd:#2c333d;--mut:#98a2b3;--acc:#60a5fa;--ok:#4ade80;--warn:#fbbf24}
+:root{
+  --bg:#f7f7f8;--bg2:#ffffff;--fg:#111114;--mut:#5d5d66;--panel:#ffffff;--panel2:#f2f2f4;
+  --bd:rgba(0,0,0,.09);--bd2:rgba(0,0,0,.16);--acc:#d93a3f;--acc-soft:rgba(217,58,63,.1);
+  --ok:#14804a;--warn:#a15c00;--track:#e2e2e6;--shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px -12px rgba(0,0,0,.12);
+  --glow:radial-gradient(1200px 420px at 50% -180px,rgba(255,99,99,.10),transparent 70%);
+  --hdr:rgba(247,247,248,.8);--r:12px;--r-sm:8px;
+  color-scheme:light;
+}
+[data-theme=dark]{
+  --bg:#070708;--bg2:#0d0d0f;--fg:#ededef;--mut:#9b9ba4;--panel:rgba(255,255,255,.035);--panel2:rgba(255,255,255,.06);
+  --bd:rgba(255,255,255,.08);--bd2:rgba(255,255,255,.16);--acc:#ff6363;--acc-soft:rgba(255,99,99,.12);
+  --ok:#4ade80;--warn:#fbbf24;--track:rgba(255,255,255,.12);--shadow:0 1px 0 rgba(255,255,255,.04) inset,0 12px 32px -16px rgba(0,0,0,.8);
+  --glow:radial-gradient(1100px 460px at 50% -200px,rgba(255,99,99,.16),transparent 70%);
+  --hdr:rgba(7,7,8,.72);
+  color-scheme:dark;
+}
 *{box-sizing:border-box}
-body{margin:0;font:15px/1.5 system-ui,sans-serif;background:var(--bg);color:var(--fg)}
-header{display:flex;flex-wrap:wrap;gap:.75rem 1.25rem;align-items:center;padding:.75rem 1rem;background:var(--panel);border-bottom:1px solid var(--bd)}
-h1{font-size:1.2rem;margin:0}
-h2,h3{margin:.2rem 0 .6rem}h3 small{color:var(--mut);font-weight:400}
-nav,.header-right{display:flex;gap:.4rem;align-items:center;flex-wrap:wrap}
-.header-right{margin-left:auto}
-button,select,input{font:inherit;color:inherit;background:var(--panel);border:1px solid var(--bd);border-radius:6px;padding:.4rem .6rem}
-button{cursor:pointer}button.active{background:var(--acc);color:#fff;border-color:var(--acc)}
-.toggle{display:flex;gap:.4rem;align-items:center;cursor:pointer}
-.toggle input,.check input{width:auto}
-main{max-width:1200px;margin:0 auto;padding:1rem}
-#status{padding:.3rem 1rem;color:var(--mut);font-size:.85rem}
-.panel{background:var(--panel);border:1px solid var(--bd);border-radius:10px;padding:1rem;margin-bottom:1rem}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.8rem;align-items:end}
-label{display:flex;flex-direction:column;gap:.25rem;font-size:.9rem}
-label.check{flex-direction:row;align-items:center;gap:.4rem}
-.hint{color:var(--mut);font-size:.85rem;display:flex;justify-content:space-between}
-p.hint{display:block}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
-.card{background:var(--panel);border:1px solid var(--bd);border-radius:10px;padding:1rem}
-.card .label{font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;color:var(--acc);font-weight:700}
-.card h3{margin:.2rem 0}
-.card dl{display:grid;grid-template-columns:auto 1fr;gap:.15rem .8rem;margin:.5rem 0}
-.card dt{color:var(--mut)}.card dd{margin:0}
-.badge{display:inline-block;padding:0 .5rem;border-radius:99px;border:1px solid var(--bd);font-size:.75rem;color:var(--mut)}
-.bar{height:6px;background:var(--bd);border-radius:3px;overflow:hidden;min-width:60px}
-.bar i{display:block;height:100%;background:var(--acc)}
-.bar.hot i{background:var(--warn)}
-.table-wrap{overflow-x:auto;background:var(--panel);border:1px solid var(--bd);border-radius:10px}
-table{border-collapse:collapse;width:100%;font-size:.88rem}
-th,td{padding:.4rem .6rem;border-bottom:1px solid var(--bd);text-align:left;white-space:nowrap}
-th{cursor:pointer;user-select:none;position:sticky;top:0;background:var(--panel)}
-td.n,th.n{text-align:right}
-.tips li{margin:.5rem 0}
-code{background:var(--bg);padding:0 .3rem;border-radius:4px}
-footer{padding:1rem;text-align:center;color:var(--mut);font-size:.8rem}
-.ign .costonly{opacity:.4;pointer-events:none}
-@media(max-width:600px){header{padding:.5rem}.header-right{margin-left:0}}
-.grid .wide{grid-column:1/-1}
-textarea{width:100%;font:inherit;padding:.6rem;border-radius:8px;border:1px solid var(--border,#8884);background:transparent;color:inherit;resize:vertical}
-
-.linkbtn{background:none;border:0;padding:0;color:inherit;text-decoration:underline;cursor:pointer;font:inherit;opacity:.8}
 [hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font:14px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  background:var(--bg) var(--glow) no-repeat;background-attachment:fixed;color:var(--fg);
+  -webkit-font-smoothing:antialiased;font-feature-settings:"cv11","ss01"}
+a{color:var(--acc);text-decoration:none}a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+
+header{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;
+  padding:.7rem 1.5rem;background:var(--hdr);backdrop-filter:blur(14px) saturate(140%);
+  -webkit-backdrop-filter:blur(14px) saturate(140%);border-bottom:1px solid var(--bd)}
+h1{font-size:15px;font-weight:650;letter-spacing:-.01em;margin:0;display:flex;align-items:center;gap:.5rem}
+h1::before{content:"";width:18px;height:18px;border-radius:5px;background:linear-gradient(135deg,var(--acc),#ff9a6b);
+  box-shadow:0 0 0 1px rgba(255,255,255,.12) inset}
+nav#tabs{display:flex;gap:2px;padding:3px;border:1px solid var(--bd);border-radius:999px;background:var(--panel)}
+nav#tabs button{border:0;background:transparent;color:var(--mut);padding:.35rem .85rem;border-radius:999px;font-weight:500}
+nav#tabs button:hover{color:var(--fg)}
+nav#tabs button.active{background:var(--panel2);color:var(--fg);box-shadow:0 0 0 1px var(--bd2) inset}
+.header-right{margin-left:auto;display:flex;gap:.5rem;align-items:center}
+
+main{max-width:1180px;margin:0 auto;padding:2rem 1.5rem 3rem}
+h2{font-size:20px;font-weight:650;letter-spacing:-.02em;margin:0 0 1rem}
+h3{font-size:15px;font-weight:600;letter-spacing:-.01em;margin:.25rem 0 .5rem}
+h3 small{color:var(--mut);font-weight:400;font-size:12px}
+
+.panel{background:var(--panel);border:1px solid var(--bd);border-radius:var(--r);padding:1.25rem 1.35rem;
+  margin-bottom:1rem;box-shadow:var(--shadow)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem 1.1rem;align-items:end}
+.grid .wide{grid-column:1/-1}
+#view-recommender .grid{align-items:start}
+label{display:flex;flex-direction:column;gap:.4rem;font-size:12.5px;font-weight:500;color:var(--mut)}
+label.check{flex-direction:row;align-items:center;gap:.5rem;color:var(--fg);font-weight:400;font-size:13.5px}
+
+input,select,button,textarea{font:inherit;color:var(--fg)}
+input[type=text],input[type=search],input[type=number],input:not([type]),select,textarea{
+  background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r-sm);padding:.5rem .65rem;
+  transition:border-color .15s,box-shadow .15s}
+[data-theme=dark] input:not([type=range]):not([type=checkbox]),[data-theme=dark] select,[data-theme=dark] textarea{background:rgba(255,255,255,.04)}
+input:hover,select:hover,textarea:hover{border-color:var(--bd2)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 3px var(--acc-soft)}
+textarea{width:100%;min-height:96px;resize:vertical;line-height:1.5;color:var(--fg)}
+select optgroup{color:var(--mut)}
+input[type=checkbox]{accent-color:var(--acc);width:15px;height:15px}
+
+button{background:var(--panel2);border:1px solid var(--bd);border-radius:var(--r-sm);padding:.45rem .85rem;
+  cursor:pointer;font-weight:500;transition:background .15s,border-color .15s}
+button:hover{border-color:var(--bd2);background:var(--acc-soft)}
+button:active{transform:translateY(1px)}
+button:disabled{opacity:.45;cursor:not-allowed}
+#theme{width:34px;height:34px;padding:0;border-radius:999px}
+.linkbtn{background:none;border:0;padding:0;color:var(--acc);text-decoration:underline;text-underline-offset:2px}
+.linkbtn:hover{background:none}
+
+.hint{color:var(--mut);font-size:12.5px;font-weight:400;margin:.25rem 0}
+#status{color:var(--mut);font-size:12.5px;max-width:1180px;margin:0 auto;padding:.6rem 1.5rem 0}
+#detected{color:var(--fg)}
+
+#slider{-webkit-appearance:none;appearance:none;width:100%;height:22px;margin:0;padding:0;background:transparent;--p:50%;cursor:pointer}
+#slider:focus{outline:none;box-shadow:none}
+#slider::-webkit-slider-runnable-track{height:8px;border-radius:999px;background:linear-gradient(to right,var(--acc) var(--p),var(--track) var(--p))}
+#slider::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;margin-top:-7px;border-radius:50%;
+  background:#fff;border:3px solid var(--acc);box-shadow:0 2px 6px rgba(0,0,0,.35)}
+#slider:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 4px var(--acc-soft),0 2px 6px rgba(0,0,0,.35)}
+#slider::-moz-range-track{height:8px;border-radius:999px;background:var(--track)}
+#slider::-moz-range-progress{height:8px;border-radius:999px;background:var(--acc)}
+#slider::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--acc)}
+label.costonly .hint{display:flex;justify-content:space-between}
+
+.toggle{display:inline-flex;align-items:center;gap:.5rem;color:var(--fg);font-size:13.5px}
+.ign .costonly{opacity:.4;pointer-events:none}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin:1rem 0}
+.card{position:relative;background:var(--panel);border:1px solid var(--bd);border-radius:var(--r);padding:1.1rem 1.2rem;
+  box-shadow:var(--shadow);transition:border-color .15s,transform .15s}
+.card:hover{border-color:var(--bd2)}
+.card:first-child{border-color:color-mix(in srgb,var(--acc) 45%,var(--bd))}
+.card .label{display:inline-block;font-size:11.5px;font-weight:600;color:var(--acc);background:var(--acc-soft);
+  padding:.15rem .55rem;border-radius:999px;margin-bottom:.5rem}
+.card h3{font-size:17px;margin:.15rem 0 .6rem}
+.card dl{display:grid;grid-template-columns:auto 1fr;gap:.3rem .9rem;margin:0;font-size:13px}
+.card dt{color:var(--mut)}
+.card dd{margin:0;text-align:right;font-variant-numeric:tabular-nums}
+
+.badge{display:inline-block;font-size:11px;font-weight:500;padding:.1rem .5rem;border-radius:999px;
+  border:1px solid var(--bd2);color:var(--mut);background:var(--panel2);margin-right:.25rem;white-space:nowrap}
+.bar{display:inline-block;width:64px;height:6px;border-radius:999px;background:var(--track);vertical-align:middle;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:999px;background:var(--fg);opacity:.55}
+.bar.hot i{background:var(--acc);opacity:1}
+
+.table-wrap{overflow:auto;border:1px solid var(--bd);border-radius:var(--r);background:var(--panel);box-shadow:var(--shadow)}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{padding:.6rem .8rem;border-bottom:1px solid var(--bd);text-align:left;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+th{position:sticky;top:0;background:var(--bg2);font-weight:500;color:var(--mut);font-size:12px;z-index:1}
+[data-theme=dark] th{background:#111113}
+th[data-k]{cursor:pointer;user-select:none}th[data-k]:hover{color:var(--fg)}
+tbody tr:hover td{background:var(--panel2)}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+
+.tips ul{margin:.25rem 0 0;padding-left:1.1rem}
+.tips li{margin:.45rem 0;color:var(--fg)}
+.tips li::marker{color:var(--acc)}
+code{font:12.5px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--panel2);border:1px solid var(--bd);
+  padding:.05rem .35rem;border-radius:5px}
+
+footer{max-width:1180px;margin:0 auto;padding:1.5rem;color:var(--mut);font-size:12px;border-top:1px solid var(--bd)}
+
+@media (max-width:640px){
+  header{padding:.6rem 1rem}
+  nav#tabs{order:3;width:100%;justify-content:space-between}
+  nav#tabs button{flex:1}
+  main{padding:1.25rem 1rem 2rem}
+  .panel{padding:1rem}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
 
 </style>
 </head>
@@ -76,20 +162,35 @@ textarea{width:100%;font:inherit;padding:.6rem;border-radius:8px;border:1px soli
     <div class="grid">
       <label class="wide">Describe your task
         <textarea id="prompt" rows="4" placeholder="e.g. Refactor a 2,000-line Python module and add unit tests… or: summarize 50 PDF invoices into a table"></textarea>
-        <span class="hint"><span id="detected">Type a prompt and I'll detect the task type.</span> <button type="button" id="changeTask" class="linkbtn">change</button></span>
+        <span class="hint"><span id="detected">Type a prompt and I'll detect the task type.</span></span>
       </label>
-      <label id="taskWrap" hidden>Task type (override)
+      <label id="taskWrap">Task type
         <select id="task">
-          <option value="coding">Coding</option>
-          <option value="reasoning">Reasoning / analysis</option>
-          <option value="writing">Writing</option>
-          <option value="extraction">Summarization / extraction</option>
-          <option value="vision">Vision (images)</option>
-          <option value="speed">Fast chat / low latency</option>
+          <optgroup label="General">
+            <option value="coding">Coding</option>
+            <option value="reasoning">Reasoning / analysis</option>
+            <option value="writing">Writing</option>
+            <option value="extraction">Summarization / extraction</option>
+            <option value="vision">Vision (images)</option>
+            <option value="speed">Fast chat / low latency</option>
+          </optgroup>
+          <optgroup label="Design &amp; UX">
+            <option value="uxdesign">UI / visual design review</option>
+            <option value="uxwriting">UX writing &amp; microcopy</option>
+            <option value="research">UX research synthesis</option>
+            <option value="frontend">Design → front-end code</option>
+          </optgroup>
+          <optgroup label="Other">
+            <option value="data">Data &amp; spreadsheets</option>
+            <option value="ideation">Brainstorming &amp; ideation</option>
+            <option value="agentic">Multi-step agent tasks</option>
+            <option value="longdoc">Long documents</option>
+            <option value="translation">Translation &amp; localization</option>
+          </optgroup>
         </select>
       </label>
       <label class="costonly">Quality ↔ cost
-        <input type="range" id="slider" min="0" max="100" value="30">
+        <input type="range" id="slider" min="0" max="100" value="50">
         <span class="hint"><span>Best quality</span><span>Lowest cost</span></span>
       </label>
     </div>
@@ -133,14 +234,21 @@ textarea{width:100%;font:inherit;padding:.6rem;border-radius:8px;border:1px soli
 </section>
 </main>
 <footer id="footer"></footer>
-<script>window.__EMBED={"models-curated.json": {"_note": "Edit freely. Ratings 1-5 (0 = no capability). Key = OpenRouter model id. tier: flagship|balanced|fast-cheap.", "models": {"anthropic/claude-opus-4.1": {"tier": "flagship", "ratings": {"coding": 5, "reasoning": 5, "writing": 5, "extraction": 4, "vision": 4, "speed": 2}, "notes": "Top-tier quality for hard coding/agentic work; slow and pricey."}, "anthropic/claude-sonnet-4": {"tier": "balanced", "ratings": {"coding": 5, "reasoning": 4, "writing": 5, "extraction": 4, "vision": 4, "speed": 3}, "notes": "Excellent coding/writing default."}, "anthropic/claude-3.5-haiku": {"tier": "fast-cheap", "ratings": {"coding": 3, "reasoning": 3, "writing": 4, "extraction": 4, "vision": 0, "speed": 5}, "notes": "Quick, inexpensive text tasks."}, "openai/gpt-4o": {"tier": "balanced", "ratings": {"coding": 4, "reasoning": 4, "writing": 4, "extraction": 4, "vision": 4, "speed": 4}, "notes": "Solid all-rounder."}, "openai/gpt-4o-mini": {"tier": "fast-cheap", "ratings": {"coding": 3, "reasoning": 3, "writing": 3, "extraction": 4, "vision": 3, "speed": 5}, "notes": "Cheap extraction and chat."}, "openai/gpt-4.1": {"tier": "balanced", "ratings": {"coding": 5, "reasoning": 4, "writing": 4, "extraction": 5, "vision": 4, "speed": 4}, "notes": "Strong coding and instruction following; 1M context."}, "openai/gpt-4.1-mini": {"tier": "fast-cheap", "ratings": {"coding": 4, "reasoning": 3, "writing": 4, "extraction": 4, "vision": 4, "speed": 5}, "notes": "Great value; long context."}, "openai/o3": {"tier": "flagship", "ratings": {"coding": 5, "reasoning": 5, "writing": 3, "extraction": 4, "vision": 4, "speed": 2}, "notes": "Deep reasoning; uses hidden reasoning tokens."}, "openai/o4-mini": {"tier": "balanced", "ratings": {"coding": 4, "reasoning": 5, "writing": 3, "extraction": 4, "vision": 4, "speed": 3}, "notes": "Cheap reasoning; reasoning tokens add output cost."}, "google/gemini-2.5-pro": {"tier": "flagship", "ratings": {"coding": 5, "reasoning": 5, "writing": 4, "extraction": 5, "vision": 5, "speed": 3}, "notes": "Best for huge documents and multimodal input."}, "google/gemini-2.5-flash": {"tier": "fast-cheap", "ratings": {"coding": 4, "reasoning": 4, "writing": 4, "extraction": 5, "vision": 4, "speed": 5}, "notes": "Fast, cheap, 1M context."}, "meta-llama/llama-3.3-70b-instruct": {"tier": "fast-cheap", "ratings": {"coding": 3, "reasoning": 3, "writing": 3, "extraction": 3, "vision": 0, "speed": 4}, "notes": "Open weights, very cheap."}, "deepseek/deepseek-chat": {"tier": "fast-cheap", "ratings": {"coding": 4, "reasoning": 4, "writing": 3, "extraction": 3, "vision": 0, "speed": 3}, "notes": "Strong value for coding."}, "deepseek/deepseek-r1": {"tier": "balanced", "ratings": {"coding": 4, "reasoning": 5, "writing": 3, "extraction": 3, "vision": 0, "speed": 2}, "notes": "Cheap reasoning; verbose output."}, "mistralai/mistral-large": {"tier": "balanced", "ratings": {"coding": 3, "reasoning": 4, "writing": 4, "extraction": 3, "vision": 0, "speed": 3}, "notes": "Good multilingual writing."}, "mistralai/mistral-small-3.2-24b-instruct": {"tier": "fast-cheap", "ratings": {"coding": 3, "reasoning": 2, "writing": 3, "extraction": 3, "vision": 2, "speed": 5}, "notes": "Very cheap small model."}, "qwen/qwen-2.5-72b-instruct": {"tier": "fast-cheap", "ratings": {"coding": 4, "reasoning": 3, "writing": 3, "extraction": 3, "vision": 0, "speed": 4}, "notes": "Capable open model; short context."}, "x-ai/grok-4": {"tier": "flagship", "ratings": {"coding": 4, "reasoning": 5, "writing": 4, "extraction": 4, "vision": 3, "speed": 2}, "notes": "Strong reasoning."}, "anthropic/claude-opus-4.5": {"tier": "flagship", "ratings": {"coding": 5, "reasoning": 5, "writing": 5, "extraction": 4, "vision": 4, "speed": 2}, "notes": "Top-tier quality for hard coding/agentic work; slow and pricey."}, "anthropic/claude-sonnet-4.5": {"tier": "balanced", "ratings": {"coding": 5, "reasoning": 4, "writing": 5, "extraction": 4, "vision": 4, "speed": 3}, "notes": "Excellent coding/writing default."}, "anthropic/claude-haiku-4.5": {"tier": "fast-cheap", "ratings": {"coding": 3, "reasoning": 3, "writing": 4, "extraction": 4, "vision": 0, "speed": 5}, "notes": "Quick, inexpensive text tasks."}}}, "models-snapshot.json": {"_note": "Offline fallback in OpenRouter /api/v1/models shape. Prices are approximate and may be stale; Refresh pulls live data.", "data": [{"id": "anthropic/claude-opus-4.1", "name": "Claude Opus 4.1", "context_length": 200000, "pricing": {"prompt": "1.5e-05", "completion": "7.5e-05"}, "architecture": {"input_modalities": ["text", "image"]}}, {"id": "anthropic/claude-sonnet-4", "name": "Claude Sonnet 4", "context_length": 200000, "pricing": {"prompt": "3e-06", "completion": "1.5e-05"}, "architecture": {"input_modalities": ["text", "image"]}}, {"id": "anthropic/claude-3.5-haiku", "name": "Claude 3.5 Haiku", "context_length": 200000, "pricing": {"prompt": "8.000000000000001e-07", "completion": "4e-06"}, "architecture": {"input_modalities": ["text"]}}, {"id": "openai/gpt-4o", "name": "GPT-4o", "context_length": 128000, "pricing": {"prompt": "2.5e-06", "completion": "1e-05"}, "architecture": {"input_modalities": ["text", "image"]}}, {"id": "openai/gpt-4o-mini", "name": "GPT-4o mini", "context_length": 128000, "pricing": {"prompt": "1.5e-07", "completion": "6e-07"}, "architecture": {"input_modalities": ["text", "image"]}}, {"id": "openai/gpt-4.1", "name": "GPT-4.1", "context_length": 1047576, "pricing": {"prompt": "2e-06", "completion": "8e-06"}, "architecture": {"input_modalities": ["text", "image"]}}, {"id": "openai/gpt-4.1-mini", "name": "GPT-4.1 mini", "context_length": 1047576, "pricing": {"prompt": "4.0000000000000003e-07", "completion": "1.6000000000000001e-06"}, "architecture": {"input_modalities": ["text", "image"]}}, {"id": "openai/o3", "name": "o3", "context_length": 200000, "pricing": {"prompt": "2e-06", "completion": "8e-06"}, "architecture": {"input_modalities": ["text", "image"]}}, {"id": "openai/o4-mini", "name": "o4-mini", "context_length": 200000, "pricing": {"prompt": "1.1e-06", "completion": "4.4e-06"}, "architecture": {"input_modalities": ["text", "image"]}}, {"id": "google/gemini-2.5-pro", "name": "Gemini 2.5 Pro", "context_length": 1048576, "pricing": {"prompt": "1.25e-06", "completion": "1e-05"}, "architecture": {"input_modalities": ["text", "image"]}}, {"id": "google/gemini-2.5-flash", "name": "Gemini 2.5 Flash", "context_length": 1048576, "pricing": {"prompt": "3e-07", "completion": "2.5e-06"}, "architecture": {"input_modalities": ["text", "image"]}}, {"id": "meta-llama/llama-3.3-70b-instruct", "name": "Llama 3.3 70B Instruct", "context_length": 131072, "pricing": {"prompt": "1.2e-07", "completion": "3e-07"}, "architecture": {"input_modalities": ["text"]}}, {"id": "deepseek/deepseek-chat", "name": "DeepSeek V3", "context_length": 163840, "pricing": {"prompt": "2.7e-07", "completion": "1.1e-06"}, "architecture": {"input_modalities": ["text"]}}, {"id": "deepseek/deepseek-r1", "name": "DeepSeek R1", "context_length": 163840, "pricing": {"prompt": "5.5e-07", "completion": "2.2e-06"}, "architecture": {"input_modalities": ["text"]}}, {"id": "mistralai/mistral-large", "name": "Mistral Large", "context_length": 128000, "pricing": {"prompt": "2e-06", "completion": "6e-06"}, "architecture": {"input_modalities": ["text"]}}, {"id": "mistralai/mistral-small-3.2-24b-instruct", "name": "Mistral Small 3.2 24B", "context_length": 131072, "pricing": {"prompt": "5.0000000000000004e-08", "completion": "1.0000000000000001e-07"}, "architecture": {"input_modalities": ["text", "image"]}}, {"id": "qwen/qwen-2.5-72b-instruct", "name": "Qwen 2.5 72B Instruct", "context_length": 32768, "pricing": {"prompt": "1.2e-07", "completion": "3.9e-07"}, "architecture": {"input_modalities": ["text"]}}, {"id": "x-ai/grok-4", "name": "Grok 4", "context_length": 256000, "pricing": {"prompt": "3e-06", "completion": "1.5e-05"}, "architecture": {"input_modalities": ["text", "image"]}}, {"id": "some-lab/unrated-demo-model", "name": "Unrated Demo Model", "context_length": 32000, "pricing": {"prompt": "5e-07", "completion": "1.5e-06"}, "architecture": {"input_modalities": ["text"]}}]}, "github-models.json": {"_note": "Models available in GitHub Copilot. Ratings, context and prices are ESTIMATES (Copilot bills by premium requests, not tokens).", "data": [{"id": "anthropic/claude-opus-5.5", "name": "Claude Opus 5.5", "context_length": 400000, "pricing": {"prompt": "1.5e-05", "completion": "7.5e-05"}, "architecture": {"input_modalities": ["text", "image"]}, "_tier": "flagship", "_ratings": {"coding": 5, "reasoning": 5, "writing": 5, "extraction": 4, "vision": 4, "speed": 2}, "_notes": "Top Anthropic model; best for hard agentic/coding work."}, {"id": "anthropic/claude-sonnet-5.5", "name": "Claude Sonnet 5.5", "context_length": 400000, "pricing": {"prompt": "3e-06", "completion": "1.5e-05"}, "architecture": {"input_modalities": ["text", "image"]}, "_tier": "balanced", "_ratings": {"coding": 5, "reasoning": 4, "writing": 5, "extraction": 4, "vision": 4, "speed": 3}, "_notes": "Strong all-rounder for coding and writing."}, {"id": "anthropic/claude-haiku-4.5", "name": "Claude Haiku 4.5", "context_length": 200000, "pricing": {"prompt": "1e-06", "completion": "5e-06"}, "architecture": {"input_modalities": ["text", "image"]}, "_tier": "fast-cheap", "_ratings": {"coding": 3, "reasoning": 3, "writing": 4, "extraction": 4, "vision": 3, "speed": 5}, "_notes": "Fast, cheap; good for extraction and chat."}, {"id": "openai/gpt-6.1-sol", "name": "GPT-6.1 Sol", "context_length": 400000, "pricing": {"prompt": "1e-05", "completion": "4e-05"}, "architecture": {"input_modalities": ["text", "image"]}, "_tier": "flagship", "_ratings": {"coding": 5, "reasoning": 5, "writing": 4, "extraction": 4, "vision": 4, "speed": 2}, "_notes": "Newest OpenAI flagship; deep reasoning."}, {"id": "openai/gpt-6-luna", "name": "GPT-6 Luna", "context_length": 400000, "pricing": {"prompt": "6e-06", "completion": "2.4e-05"}, "architecture": {"input_modalities": ["text", "image"]}, "_tier": "flagship", "_ratings": {"coding": 5, "reasoning": 5, "writing": 4, "extraction": 4, "vision": 4, "speed": 3}, "_notes": "Strong general-purpose OpenAI model."}, {"id": "openai/gpt-5.6-terra", "name": "GPT-5.6 Terra", "context_length": 400000, "pricing": {"prompt": "5e-06", "completion": "2e-05"}, "architecture": {"input_modalities": ["text", "image"]}, "_tier": "balanced", "_ratings": {"coding": 4, "reasoning": 4, "writing": 4, "extraction": 4, "vision": 4, "speed": 3}, "_notes": "Balanced quality and cost."}, {"id": "openai/gpt-5.5", "name": "GPT-5.5", "context_length": 400000, "pricing": {"prompt": "5e-06", "completion": "2e-05"}, "architecture": {"input_modalities": ["text", "image"]}, "_tier": "balanced", "_ratings": {"coding": 4, "reasoning": 4, "writing": 4, "extraction": 4, "vision": 4, "speed": 3}, "_notes": "Solid all-rounder."}, {"id": "openai/gpt-5.4-mini", "name": "GPT-5.4 mini", "context_length": 400000, "pricing": {"prompt": "5e-07", "completion": "2e-06"}, "architecture": {"input_modalities": ["text", "image"]}, "_tier": "fast-cheap", "_ratings": {"coding": 3, "reasoning": 3, "writing": 3, "extraction": 4, "vision": 3, "speed": 5}, "_notes": "Cheap and quick for simple tasks."}, {"id": "openai/gpt-5-mini", "name": "GPT-5 mini", "context_length": 400000, "pricing": {"prompt": "2.5e-07", "completion": "2e-06"}, "architecture": {"input_modalities": ["text", "image"]}, "_tier": "fast-cheap", "_ratings": {"coding": 3, "reasoning": 3, "writing": 3, "extraction": 3, "vision": 3, "speed": 5}, "_notes": "Very cheap, light reasoning."}, {"id": "openai/gpt-5.3-codex", "name": "GPT-5.3-Codex", "context_length": 400000, "pricing": {"prompt": "2e-06", "completion": "1e-05"}, "architecture": {"input_modalities": ["text"]}, "_tier": "balanced", "_ratings": {"coding": 5, "reasoning": 4, "writing": 2, "extraction": 3, "vision": 0, "speed": 3}, "_notes": "Tuned for code generation and refactoring."}, {"id": "microsoft/mai-code-1.1-flash", "name": "MAI-Code-1.1-Flash", "context_length": 128000, "pricing": {"prompt": "3e-07", "completion": "1.2e-06"}, "architecture": {"input_modalities": ["text"]}, "_tier": "fast-cheap", "_ratings": {"coding": 4, "reasoning": 3, "writing": 2, "extraction": 3, "vision": 0, "speed": 5}, "_notes": "Fast coding model for quick edits."}, {"id": "google/gemini-3.8-flash", "name": "Gemini 3.8 Flash", "context_length": 1000000, "pricing": {"prompt": "3e-07", "completion": "2.5e-06"}, "architecture": {"input_modalities": ["text", "image"]}, "_tier": "fast-cheap", "_ratings": {"coding": 3, "reasoning": 3, "writing": 3, "extraction": 4, "vision": 4, "speed": 5}, "_notes": "Fast, huge context; great for summarizing long inputs."}]}};</script>
+<script>window.__EMBED={"models-curated.json": {"_note": "Edit freely. Ratings 1-5 (0 = no capability). Key = OpenRouter model id. tier: flagship|balanced|fast-cheap.", "models": {"anthropic/claude-opus-4.1": {"tier": "flagship", "ratings": {"coding": 5, "reasoning": 5, "writing": 5, "extraction": 4, "vision": 4, "speed": 2}, "notes": "Top-tier quality for hard coding/agentic work; slow and pricey."}, "anthropic/claude-sonnet-4": {"tier": "balanced", "ratings": {"coding": 5, "reasoning": 4, "writing": 5, "extraction": 4, "vision": 4, "speed": 3}, "notes": "Excellent coding/writing default."}, "anthropic/claude-3.5-haiku": {"tier": "fast-cheap", "ratings": {"coding": 3, "reasoning": 3, "writing": 4, "extraction": 4, "vision": 0, "speed": 5}, "notes": "Quick, inexpensive text tasks."}, "openai/gpt-4o": {"tier": "balanced", "ratings": {"coding": 4, "reasoning": 4, "writing": 4, "extraction": 4, "vision": 4, "speed": 4}, "notes": "Solid all-rounder."}, "openai/gpt-4o-mini": {"tier": "fast-cheap", "ratings": {"coding": 3, "reasoning": 3, "writing": 3, "extraction": 4, "vision": 3, "speed": 5}, "notes": "Cheap extraction and chat."}, "openai/gpt-4.1": {"tier": "balanced", "ratings": {"coding": 5, "reasoning": 4, "writing": 4, "extraction": 5, "vision": 4, "speed": 4}, "notes": "Strong coding and instruction following; 1M context."}, "openai/gpt-4.1-mini": {"tier": "fast-cheap", "ratings": {"coding": 4, "reasoning": 3, "writing": 4, "extraction": 4, "vision": 4, "speed": 5}, "notes": "Great value; long context."}, "openai/o3": {"tier": "flagship", "ratings": {"coding": 5, "reasoning": 5, "writing": 3, "extraction": 4, "vision": 4, "speed": 2}, "notes": "Deep reasoning; uses hidden reasoning tokens."}, "openai/o4-mini": {"tier": "balanced", "ratings": {"coding": 4, "reasoning": 5, "writing": 3, "extraction": 4, "vision": 4, "speed": 3}, "notes": "Cheap reasoning; reasoning tokens add output cost."}, "google/gemini-2.5-pro": {"tier": "flagship", "ratings": {"coding": 5, "reasoning": 5, "writing": 4, "extraction": 5, "vision": 5, "speed": 3}, "notes": "Best for huge documents and multimodal input."}, "google/gemini-2.5-flash": {"tier": "fast-cheap", "ratings": {"coding": 4, "reasoning": 4, "writing": 4, "extraction": 5, "vision": 4, "speed": 5}, "notes": "Fast, cheap, 1M context."}, "meta-llama/llama-3.3-70b-instruct": {"tier": "fast-cheap", "ratings": {"coding": 3, "reasoning": 3, "writing": 3, "extraction": 3, "vision": 0, "speed": 4}, "notes": "Open weights, very cheap."}, "deepseek/deepseek-chat": {"tier": "fast-cheap", "ratings": {"coding": 4, "reasoning": 4, "writing": 3, "extraction": 3, "vision": 0, "speed": 3}, "notes": "Strong value for coding."}, "deepseek/deepseek-r1": {"tier": "balanced", "ratings": {"coding": 4, "reasoning": 5, "writing": 3, "extraction": 3, "vision": 0, "speed": 2}, "notes": "Cheap reasoning; verbose output."}, "mistralai/mistral-large": {"tier": "balanced", "ratings": {"coding": 3, "reasoning": 4, "writing": 4, "extraction": 3, "vision": 0, "speed": 3}, "notes": "Good multilingual writing."}, "mistralai/mistral-small-3.2-24b-instruct": {"tier": "fast-cheap", "ratings": {"coding": 3, "reasoning": 2, "writing": 3, "extraction": 3, "vision": 2, "speed": 5}, "notes": "Very cheap small model."}, "qwen/qwen-2.5-72b-instruct": {"tier": "fast-cheap", "ratings": {"coding": 4, "reasoning": 3, "writing": 3, "extraction": 3, "vision": 0, "speed": 4}, "notes": "Capable open model; short context."}, "x-ai/grok-4": {"tier": "flagship", "ratings": {"coding": 4, "reasoning": 5, "writing": 4, "extraction": 4, "vision": 3, "speed": 2}, "notes": "Strong reasoning."}, "anthropic/claude-opus-4.5": {"tier": "flagship", "ratings": {"coding": 5, "reasoning": 5, "writing": 5, "extraction": 4, "vision": 4, "speed": 2}, "notes": "Top-tier quality for hard coding/agentic work; slow and pricey."}, "anthropic/claude-sonnet-4.5": {"tier": "balanced", "ratings": {"coding": 5, "reasoning": 4, "writing": 5, "extraction": 4, "vision": 4, "speed": 3}, "notes": "Excellent coding/writing default."}, "anthropic/claude-haiku-4.5": {"tier": "fast-cheap", "ratings": {"coding": 3, "reasoning": 3, "writing": 4, "extraction": 4, "vision": 0, "speed": 5}, "notes": "Quick, inexpensive text tasks."}}}, "models-snapshot.json": {"_note": "Offline fallback in OpenRouter /api/v1/models shape. Prices are approximate and may be stale; Refresh pulls live data.", "data": [{"id": "anthropic/claude-opus-4.1", "name": "Claude Opus 4.1", "context_length": 200000, "pricing": {"prompt": "1.5e-05", "completion": "7.5e-05"}, "architecture": {"input_modalities": ["text", "image"]}}, {"id": "anthropic/claude-sonnet-4", "name": "Claude Sonnet 4", "context_length": 200000, "pricing": {"prompt": "3e-06", "completion": "1.5e-05"}, "architecture": {"input_modalities": ["text", "image"]}}, {"id": "anthropic/claude-3.5-haiku", "name": "Claude 3.5 Haiku", "context_length": 200000, "pricing": {"prompt": "8.000000000000001e-07", "completion": "4e-06"}, "architecture": {"input_modalities": ["text"]}}, {"id": "openai/gpt-4o", "name": "GPT-4o", "context_length": 128000, "pricing": {"prompt": "2.5e-06", "completion": "1e-05"}, "architecture": {"input_modalities": ["text", "image"]}}, {"id": "openai/gpt-4o-mini", "name": "GPT-4o mini", "context_length": 128000, "pricing": {"prompt": "1.5e-07", "completion": "6e-07"}, "architecture": {"input_modalities": ["text", "image"]}}, {"id": "openai/gpt-4.1", "name": "GPT-4.1", "context_length": 1047576, "pricing": {"prompt": "2e-06", "completion": "8e-06"}, "architecture": {"input_modalities": ["text", "image"]}}, {"id": "openai/gpt-4.1-mini", "name": "GPT-4.1 mini", "context_length": 1047576, "pricing": {"prompt": "4.0000000000000003e-07", "completion": "1.6000000000000001e-06"}, "architecture": {"input_modalities": ["text", "image"]}}, {"id": "openai/o3", "name": "o3", "context_length": 200000, "pricing": {"prompt": "2e-06", "completion": "8e-06"}, "architecture": {"input_modalities": ["text", "image"]}}, {"id": "openai/o4-mini", "name": "o4-mini", "context_length": 200000, "pricing": {"prompt": "1.1e-06", "completion": "4.4e-06"}, "architecture": {"input_modalities": ["text", "image"]}}, {"id": "google/gemini-2.5-pro", "name": "Gemini 2.5 Pro", "context_length": 1048576, "pricing": {"prompt": "1.25e-06", "completion": "1e-05"}, "architecture": {"input_modalities": ["text", "image"]}}, {"id": "google/gemini-2.5-flash", "name": "Gemini 2.5 Flash", "context_length": 1048576, "pricing": {"prompt": "3e-07", "completion": "2.5e-06"}, "architecture": {"input_modalities": ["text", "image"]}}, {"id": "meta-llama/llama-3.3-70b-instruct", "name": "Llama 3.3 70B Instruct", "context_length": 131072, "pricing": {"prompt": "1.2e-07", "completion": "3e-07"}, "architecture": {"input_modalities": ["text"]}}, {"id": "deepseek/deepseek-chat", "name": "DeepSeek V3", "context_length": 163840, "pricing": {"prompt": "2.7e-07", "completion": "1.1e-06"}, "architecture": {"input_modalities": ["text"]}}, {"id": "deepseek/deepseek-r1", "name": "DeepSeek R1", "context_length": 163840, "pricing": {"prompt": "5.5e-07", "completion": "2.2e-06"}, "architecture": {"input_modalities": ["text"]}}, {"id": "mistralai/mistral-large", "name": "Mistral Large", "context_length": 128000, "pricing": {"prompt": "2e-06", "completion": "6e-06"}, "architecture": {"input_modalities": ["text"]}}, {"id": "mistralai/mistral-small-3.2-24b-instruct", "name": "Mistral Small 3.2 24B", "context_length": 131072, "pricing": {"prompt": "5.0000000000000004e-08", "completion": "1.0000000000000001e-07"}, "architecture": {"input_modalities": ["text", "image"]}}, {"id": "qwen/qwen-2.5-72b-instruct", "name": "Qwen 2.5 72B Instruct", "context_length": 32768, "pricing": {"prompt": "1.2e-07", "completion": "3.9e-07"}, "architecture": {"input_modalities": ["text"]}}, {"id": "x-ai/grok-4", "name": "Grok 4", "context_length": 256000, "pricing": {"prompt": "3e-06", "completion": "1.5e-05"}, "architecture": {"input_modalities": ["text", "image"]}}, {"id": "some-lab/unrated-demo-model", "name": "Unrated Demo Model", "context_length": 32000, "pricing": {"prompt": "5e-07", "completion": "1.5e-06"}, "architecture": {"input_modalities": ["text"]}}]}, "github-models.json": {"_note": "Models available in GitHub Copilot. Ratings, context and prices are ESTIMATES (Copilot bills by premium requests, not tokens).", "data": [{"id": "anthropic/claude-opus-5.5", "name": "Claude Opus 5.5", "context_length": 400000, "pricing": {"prompt": "1.5e-05", "completion": "7.5e-05"}, "architecture": {"input_modalities": ["text", "image"]}, "_tier": "flagship", "_ratings": {"coding": 5, "reasoning": 5, "writing": 5, "extraction": 4, "vision": 4, "speed": 2}, "_notes": "Top Anthropic model; best for hard agentic/coding work."}, {"id": "anthropic/claude-sonnet-5.5", "name": "Claude Sonnet 5.5", "context_length": 400000, "pricing": {"prompt": "3e-06", "completion": "1.5e-05"}, "architecture": {"input_modalities": ["text", "image"]}, "_tier": "balanced", "_ratings": {"coding": 5, "reasoning": 4, "writing": 5, "extraction": 4, "vision": 4, "speed": 3}, "_notes": "Strong all-rounder for coding and writing."}, {"id": "anthropic/claude-haiku-4.5", "name": "Claude Haiku 4.5", "context_length": 200000, "pricing": {"prompt": "1e-06", "completion": "5e-06"}, "architecture": {"input_modalities": ["text", "image"]}, "_tier": "fast-cheap", "_ratings": {"coding": 3, "reasoning": 3, "writing": 4, "extraction": 4, "vision": 3, "speed": 5}, "_notes": "Fast, cheap; good for extraction and chat.", "_multiplier": 0.33}, {"id": "openai/gpt-6.1-sol", "name": "GPT-6.1 Sol", "context_length": 400000, "pricing": {"prompt": "1e-05", "completion": "4e-05"}, "architecture": {"input_modalities": ["text", "image"]}, "_tier": "flagship", "_ratings": {"coding": 5, "reasoning": 5, "writing": 4, "extraction": 4, "vision": 4, "speed": 2}, "_notes": "Newest OpenAI flagship; deep reasoning."}, {"id": "openai/gpt-6-luna", "name": "GPT-6 Luna", "context_length": 400000, "pricing": {"prompt": "6e-06", "completion": "2.4e-05"}, "architecture": {"input_modalities": ["text", "image"]}, "_tier": "flagship", "_ratings": {"coding": 5, "reasoning": 5, "writing": 4, "extraction": 4, "vision": 4, "speed": 3}, "_notes": "Strong general-purpose OpenAI model."}, {"id": "openai/gpt-5.6-terra", "name": "GPT-5.6 Terra", "context_length": 400000, "pricing": {"prompt": "5e-06", "completion": "2e-05"}, "architecture": {"input_modalities": ["text", "image"]}, "_tier": "balanced", "_ratings": {"coding": 4, "reasoning": 4, "writing": 4, "extraction": 4, "vision": 4, "speed": 3}, "_notes": "Balanced quality and cost."}, {"id": "openai/gpt-5.5", "name": "GPT-5.5", "context_length": 400000, "pricing": {"prompt": "5e-06", "completion": "2e-05"}, "architecture": {"input_modalities": ["text", "image"]}, "_tier": "balanced", "_ratings": {"coding": 4, "reasoning": 4, "writing": 4, "extraction": 4, "vision": 4, "speed": 3}, "_notes": "Solid all-rounder.", "_multiplier": 57}, {"id": "openai/gpt-5.4-mini", "name": "GPT-5.4 mini", "context_length": 400000, "pricing": {"prompt": "5e-07", "completion": "2e-06"}, "architecture": {"input_modalities": ["text", "image"]}, "_tier": "fast-cheap", "_ratings": {"coding": 3, "reasoning": 3, "writing": 3, "extraction": 4, "vision": 3, "speed": 5}, "_notes": "Cheap and quick for simple tasks.", "_multiplier": 6}, {"id": "openai/gpt-5-mini", "name": "GPT-5 mini", "context_length": 400000, "pricing": {"prompt": "2.5e-07", "completion": "2e-06"}, "architecture": {"input_modalities": ["text", "image"]}, "_tier": "fast-cheap", "_ratings": {"coding": 3, "reasoning": 3, "writing": 3, "extraction": 3, "vision": 3, "speed": 5}, "_notes": "Very cheap, light reasoning.", "_multiplier": 0.33}, {"id": "openai/gpt-5.3-codex", "name": "GPT-5.3-Codex", "context_length": 400000, "pricing": {"prompt": "2e-06", "completion": "1e-05"}, "architecture": {"input_modalities": ["text"]}, "_tier": "balanced", "_ratings": {"coding": 5, "reasoning": 4, "writing": 2, "extraction": 3, "vision": 0, "speed": 3}, "_notes": "Tuned for code generation and refactoring.", "_multiplier": 6}, {"id": "microsoft/mai-code-1.1-flash", "name": "MAI-Code-1.1-Flash", "context_length": 128000, "pricing": {"prompt": "3e-07", "completion": "1.2e-06"}, "architecture": {"input_modalities": ["text"]}, "_tier": "fast-cheap", "_ratings": {"coding": 4, "reasoning": 3, "writing": 2, "extraction": 3, "vision": 0, "speed": 5}, "_notes": "Fast coding model for quick edits.", "_multiplier": 0.25}, {"id": "google/gemini-3.8-flash", "name": "Gemini 3.8 Flash", "context_length": 1000000, "pricing": {"prompt": "3e-07", "completion": "2.5e-06"}, "architecture": {"input_modalities": ["text", "image"]}, "_tier": "fast-cheap", "_ratings": {"coding": 3, "reasoning": 3, "writing": 3, "extraction": 4, "vision": 4, "speed": 5}, "_notes": "Fast, huge context; great for summarizing long inputs."}]}, "reddit-signals.json": {"fetched": null, "models": {}}, "vendor-releases.json": {"fetched": "2026-10-08", "vendors": {"anthropic": {"url": "https://www.anthropic.com/news", "items": [{"title": "Cyber verification program", "url": "https://www.anthropic.com/news/cyber-verification-program", "date": ""}, {"title": "Claude frontier academy", "url": "https://www.anthropic.com/news/claude-frontier-academy", "date": ""}, {"title": "Barclays scales claude", "url": "https://www.anthropic.com/news/barclays-scales-claude", "date": ""}]}, "openai": {"url": "https://openai.com/news/", "items": [{"title": "Helping teens learn, plan, and shape the future of AI", "url": "https://openai.com/index/teens-learn-and-plan", "date": "Wed, 07 Oct 2026"}, {"title": "Radisson Hotel Group brings hotel discovery into ChatGPT", "url": "https://openai.com/index/radisson", "date": "Wed, 07 Oct 2026"}, {"title": "GPT-6 and Intelligent UI for everyone", "url": "https://openai.com/index/gpt-6-for-everyone", "date": "Wed, 07 Oct 2026"}]}, "google": {"url": "https://blog.google/technology/ai/", "items": [{"title": "Introducing Playground: Create and play custom games", "url": "https://blog.google/innovation-and-ai/technology/ai/playground-experimental-gaming-platform/", "date": "Wed, 07 Oct 2026"}, {"title": "The latest AI news we announced in September 2026", "url": "https://blog.google/innovation-and-ai/technology/ai/google-ai-updates-september-2026/", "date": "Fri, 02 Oct 2026"}, {"title": "Watch the winning trailer from the Future Vision XPRIZE, The Gifted.", "url": "https://blog.google/innovation-and-ai/technology/ai/winner-future-vision-xprize/", "date": "Mon, 28 Sep 2026"}]}, "microsoft": {"url": "https://azure.microsoft.com/en-us/blog/", "items": []}}}, "forum-signals.json": {"fetched": "2026-10-08", "models": {"anthropic/claude-opus-5.5": {"mentions": 10, "threads": [{"title": "Claude Opus 5.5", "url": "https://news.ycombinator.com/item?id=49803892", "src": "HN", "score": 1806}, {"title": "Claude Opus 5.5 Intelligence, Performance and Price Analysis (Max)", "url": "https://news.ycombinator.com/item?id=49804316", "src": "HN", "score": 333}, {"title": "Claude Opus 5.5", "url": "https://news.ycombinator.com/item?id=49803863", "src": "HN", "score": 273}]}, "anthropic/claude-sonnet-5.5": {"mentions": 2, "threads": [{"title": "Claude Sonnet 5.5 for code review: More catches than Sonnet 5, in half the time", "url": "https://news.ycombinator.com/item?id=49896246", "src": "HN", "score": 4}, {"title": "Claude Sonnet 5.5 (Max Effort) Intelligence, Performance and Price Analysis", "url": "https://news.ycombinator.com/item?id=49882688", "src": "HN", "score": 4}]}, "anthropic/claude-haiku-4.5": {"mentions": 9, "threads": [{"title": "Claude Haiku 4.5", "url": "https://news.ycombinator.com/item?id=45595403", "src": "HN", "score": 730}, {"title": "Claude Haiku 4.5 System Card [pdf]", "url": "https://news.ycombinator.com/item?id=45596168", "src": "HN", "score": 51}, {"title": "Show HN: TTFT benchmark: LLM Gateway vs. OpenRouter (Claude-haiku-4.5, 150 runs)", "url": "https://news.ycombinator.com/item?id=49012741", "src": "HN", "score": 3}]}, "openai/gpt-6.1-sol": {"mentions": 8, "threads": [{"title": "GPT 6.1 Sol: Near-Astra intelligence for a fifth of the price", "url": "https://news.ycombinator.com/item?id=49896586", "src": "HN", "score": 1067}, {"title": "GPT-6.1 Sol replaces GPT-6 Sol after just 7 days, with near-Astra intelligence", "url": "https://news.ycombinator.com/item?id=49906669", "src": "HN", "score": 80}, {"title": "GPT-6.1 Sol (Max): Intelligence, Performance and Price Analysis", "url": "https://news.ycombinator.com/item?id=49898379", "src": "HN", "score": 4}]}, "openai/gpt-6-luna": {"mentions": 3, "threads": [{"title": "GPT-6 Sol is like GPT-5.6 Terra, GPT-6 Luna is like GPT-5.6 Asteroid", "url": "https://news.ycombinator.com/item?id=49835237", "src": "HN", "score": 18}, {"title": "Claude Opus 5.5, GPT-6 Sol, GPT-6 Luna, and a new price war", "url": "https://news.ycombinator.com/item?id=49812887", "src": "HN", "score": 3}, {"title": "GPT-6 Luna (Max) Intelligence, Performance and Price Analysis", "url": "https://news.ycombinator.com/item?id=49806285", "src": "HN", "score": 2}]}, "openai/gpt-5.6-terra": {"mentions": 3, "threads": [{"title": "GPT-6 Sol is like GPT-5.6 Terra, GPT-6 Luna is like GPT-5.6 Asteroid", "url": "https://news.ycombinator.com/item?id=49835237", "src": "HN", "score": 18}, {"title": "GPT-5.6-terra used 48.5% more context than Mimo-2.5-pro", "url": "https://news.ycombinator.com/item?id=48919754", "src": "HN", "score": 3}, {"title": "Free GPT 5.6 Terra and Luna (2.5M/day) & 250k Sol \u2013 free experiments", "url": "https://news.ycombinator.com/item?id=48975696", "src": "HN", "score": 2}]}, "openai/gpt-5.5": {"mentions": 10, "threads": [{"title": "GPT-5.5", "url": "https://news.ycombinator.com/item?id=47879092", "src": "HN", "score": 1580}, {"title": "GPT-5.5 hallucinates 3x more than MIT-licensed GLM-5.2", "url": "https://news.ycombinator.com/item?id=48600167", "src": "HN", "score": 585}, {"title": "DeepSeek V4 Pro beats GPT-5.5 Pro on precision", "url": "https://news.ycombinator.com/item?id=48440448", "src": "HN", "score": 397}]}, "openai/gpt-5.4-mini": {"mentions": 4, "threads": [{"title": "GPT\u20115.4 Mini and Nano", "url": "https://news.ycombinator.com/item?id=47415441", "src": "HN", "score": 248}, {"title": "Hands-on comparison of Jev with Haiku 4.5, GPT-5.4-mini, and Gemini 3.5 Flash", "url": "https://news.ycombinator.com/item?id=49982760", "src": "HN", "score": 3}, {"title": "Show HN: Classer \u2013 high-performance classification API (beats GPT-5.4-mini)", "url": "https://news.ycombinator.com/item?id=48489816", "src": "HN", "score": 2}]}, "openai/gpt-5-mini": {"mentions": 6, "threads": [{"title": "Tau\u00b2 benchmark: How a prompt rewrite boosted GPT-5-mini by 22%", "url": "https://news.ycombinator.com/item?id=45275354", "src": "HN", "score": 197}, {"title": "Show HN: I built a vibe agent builder with deployment (GPT-5-mini powered)", "url": "https://news.ycombinator.com/item?id=44876340", "src": "HN", "score": 3}, {"title": "Claude Haiku 4.5 vs. GLM-4.6 vs. GPT-5 Mini: Job Queue System Benchmark", "url": "https://news.ycombinator.com/item?id=45741464", "src": "HN", "score": 2}]}, "openai/gpt-5.3-codex": {"mentions": 10, "threads": [{"title": "GPT-5.3-Codex", "url": "https://news.ycombinator.com/item?id=46902638", "src": "HN", "score": 1530}, {"title": "GPT\u20115.3\u2011Codex\u2011Spark", "url": "https://news.ycombinator.com/item?id=46992553", "src": "HN", "score": 890}, {"title": "GPT-5.3-Codex being routed to GPT-5.2", "url": "https://news.ycombinator.com/item?id=46968891", "src": "HN", "score": 77}]}, "microsoft/mai-code-1.1-flash": {"mentions": 2, "threads": [{"title": "MAI-Code-1.1-Flash: Better, faster, at a quarter of the cost", "url": "https://news.ycombinator.com/item?id=49263442", "src": "HN", "score": 6}, {"title": "MAI-Code-1.1-Flash: Better, faster, at a quarter of the cost", "url": "https://news.ycombinator.com/item?id=50000104", "src": "HN", "score": 1}]}, "google/gemini-3.8-flash": {"mentions": 12, "threads": [{"title": "Gemini 3.8 Flash and 3.8 Flash Cyber", "url": "https://news.ycombinator.com/item?id=49537553", "src": "HN", "score": 1160}, {"title": "Gemini 3.8 Flash and 3.8 Flash Cyber", "url": "https://news.ycombinator.com/item?id=49538007", "src": "HN", "score": 76}, {"title": "Kimi K3 and GLM-5.3 are better than Gemini 3.8 Flash", "url": "https://news.ycombinator.com/item?id=49539315", "src": "HN", "score": 11}]}}}};</script>
 <script>
 (() => {
 const API = "https://openrouter.ai/api/v1/models";
 const CACHE_KEY = "modelPicker.cache.v1", TTL = 6 * 3600 * 1000;
 const $ = id => document.getElementById(id);
 const RK = ["coding", "reasoning", "writing", "extraction", "vision", "speed"];
-const TASK_LABEL = {coding:"Coding",reasoning:"Reasoning",writing:"Writing",extraction:"Summarization/extraction",vision:"Vision",speed:"Speed"};
+// Extra task types are weighted blends of the 6 benchmarked ratings, so no per-model scores are invented
+const BLEND = {
+  uxdesign:{vision:.6,reasoning:.4}, uxwriting:{writing:.7,reasoning:.3}, research:{extraction:.5,reasoning:.5},
+  frontend:{coding:.7,vision:.3}, data:{reasoning:.5,extraction:.3,coding:.2}, ideation:{writing:.5,reasoning:.5},
+  agentic:{coding:.5,reasoning:.5}, longdoc:{extraction:.6,reasoning:.4}, translation:{writing:.6,extraction:.4}};
+const TASK_LABEL = {coding:"Coding",reasoning:"Reasoning",writing:"Writing",extraction:"Summarization/extraction",vision:"Vision",speed:"Speed",
+  uxdesign:"UI / visual design review",uxwriting:"UX writing & microcopy",research:"UX research synthesis",frontend:"Design → front-end code",
+  data:"Data & spreadsheets",ideation:"Brainstorming & ideation",agentic:"Multi-step agent tasks",longdoc:"Long documents",translation:"Translation & localization"};
 const HEUR = { // fallback ratings by price tier
   flagship:{coding:4,reasoning:4,writing:4,extraction:4,vision:4,speed:2},
   balanced:{coding:3,reasoning:3,writing:3,extraction:3,vision:3,speed:3},
@@ -148,15 +256,40 @@ const HEUR = { // fallback ratings by price tier
 let ghModels = [], models = [], source = "", sortKey = "name", sortDir = 1;
 const selected = new Set();
 const KW = {
-  vision: /\b(image|photo|picture|screenshot|diagram|ocr|chart|scan|vision|visual|video|figma|design|graphic|logo|illustrat|poster|banner|mockup|layout|branding|ux|ui\b|typograph|infographic|icon|sketch|draw)\w*/i,
-  coding: /\b(code|coding|function|bug|debug|refactor|script|python|javascript|typescript|java|rust|golang|sql|regex|api|unit test|test case|compil|repo|program|develop|software|frontend|backend|app\b|website|css|html|react|deploy|algorithm)\w*/i,
-  extraction: /\b(summari|summary|extract|classif|tag|parse|pdf|invoice|transcript|translat|json|table|categori|label|sentiment|tl;?dr|digest|notes|data entry)\w*/i,
-  reasoning: /\b(reason|analy|math|proof|plan|strateg|logic|puzzle|research|decid|decision|compar|trade-?off|why|evaluat|diagnos|solve|problem|forecast|critique|review|architect)\w*/i,
-  writing: /\b(write|writing|essay|blog|email|article|story|stories|copy|rewrite|draft|poem|marketing|post|tone|brainstorm|ideas?|ideat|creative|name|names|slogan|tagline|script|pitch|content|caption|speech|newsletter|edit|proofread)\w*/i,
+  uxdesign: /\b(figma|design|mockup|wireframe|layout|ui\b|ux\b|typograph|branding|logo|icon|banner|poster|graphic|illustrat|moodboard|palette|visual)\w*/i,
+  uxwriting: /\b(microcopy|copy|label|tooltip|cta|headline|wording|phrasing)\w*/i,
+  research: /\b(interview|survey|persona|insight|finding|usability|participant|user research|feedback|synthes)\w*/i,
+  frontend: /\b(frontend|front-end|css|html|react|component|tailwind|responsive|vue|svelte|figma to code)\w*/i,
+  data: /\b(spreadsheet|excel|csv|dataset|pandas|dashboard|metric|kpi|pivot|chart data|analytics|sql query|formula)\w*/i,
+  ideation: /\b(brainstorm|ideas?|ideat|concepts?|name|names|naming|slogan|tagline|creative|inspiration|alternatives)\w*/i,
+  agentic: /\b(agent|agentic|multi-?step|automat|workflow|pipeline|orchestrat|tool use|autonomous|end-to-end)\w*/i,
+  longdoc: /\b(long document|book|report|contract|whitepaper|thesis|manual|100 pages|entire (doc|codebase|repo)|large file|hundreds of pages)\w*/i,
+  translation: /\b(translat|locali[sz]|i18n|l10n|spanish|french|german|japanese|chinese|portuguese|italian|multilingual)\w*/i,
+  vision: /\b(image|photo|picture|screenshot|diagram|ocr|chart|scan|vision|video|infographic|sketch|draw)\w*/i,
+  coding: /\b(code|coding|function|bug|debug|refactor|script|python|javascript|typescript|java|rust|golang|sql|regex|api|unit test|test case|compil|repo|program|develop|software|backend|app\b|website|deploy|algorithm)\w*/i,
+  extraction: /\b(summari|summary|extract|classif|tag|parse|pdf|invoice|transcript|json|table|categori|sentiment|tl;?dr|digest|notes|data entry)\w*/i,
+  reasoning: /\b(reason|analy|math|proof|plan|strateg|logic|puzzle|decid|decision|compar|trade-?off|why|evaluat|diagnos|solve|problem|forecast|critique|review|architect|how|what|should|best|advice|suggest|recommend|help|think|calculat|estimat|optimi)\w*/i,
+  writing: /\b(write|writing|essay|blog|email|article|story|stories|rewrite|draft|poem|marketing|post|tone|script|pitch|content|caption|speech|newsletter|edit|proofread|letter|message|reply|respond|describe|explain|rephrase|paraphras|polish|brief|outline|resume|cv|cover|bio|description|text|documentation|docs)\w*/i,
   speed: /\b(chat|chatbot|quick|real-?time|latency|fast|autocomplete|instant|conversation|support bot|assistant)\w*/i};
+// Strong phrases count 3 so they outweigh generic words like "help" or "what"
+const KW_STRONG = {
+  uxdesign: /\b(wireframe|mock-?up|hi-?fi|lo-?fi|visual hierarchy|colou?r (palette|contrast|scheme)|contrast ratio|moodboard|mood board|style ?guide|ui kit|design critique|heuristic evaluation|usability review of (a )?screen|app screen|landing page design|iconograph|brand identity|accessib\w* (audit|contrast)|design system|information architecture|user flow|design principle|onboarding flow|figma)\w*/gi,
+  uxwriting: /\b(micro-?copy|ux (copy|writing)|content design|empty state|error (message|state)|button (label|text)|tone of voice|voice and tone|onboarding (copy|text)|tooltip|cta|release notes|help text|placeholder text|confirmation message|rewrite (this )?(copy|text)|alt text)\w*/gi,
+  research: /\b(persona|user journey|journey map|empathy map|card sort|tree test|usability (test|issue|notes|recordings?)|jobs? to be done|jtbd|how might we|hmw|affinity|ux research|user research|pain points?|service blueprint|interview (notes|transcript)|survey (responses|results)|user feedback|open-?ended|synthesi[sz]e|tag (the )?feedback)\w*/gi,
+  frontend: /\b(design tokens?|tailwind|component library|storybook|responsive|flexbox|grid layout|navbar|react component|css variables?|dark mode|media quer|animation (code|css)|html prototype|front-?end|from figma|figma to (code|react|html))\w*/gi,
+  data: /\b(spreadsheet|csv|pivot table|excel formula|pandas|dashboard metrics|data analysis)\w*/gi,
+  ideation: /\b(brainstorm|come up with|generate ideas|name ideas|concept directions)\w*/gi,
+  agentic: /\b(multi-?step|agentic|autonomous agent|automate (this|the|my)|end-to-end workflow)\w*/gi,
+  longdoc: /\b(long document|entire (report|book|contract|codebase)|hundreds of pages|\d{2,} pages)\w*/gi,
+  translation: /\b(translate|locali[sz]e|into (spanish|french|german|japanese|chinese|portuguese|italian))\w*/gi};
+// Specific types come first in KW, so a tie goes to the more specific one
 function detectTask(t) {
   let best = null, n = 0;
-  for (const k in KW) { const c = (t.match(new RegExp(KW[k].source, "gi")) || []).length; if (c > n) { n = c; best = k; } }
+  for (const k in KW) {
+    let sc = (t.match(new RegExp(KW[k].source, "gi")) || []).length;
+    if (KW_STRONG[k]) sc += 3 * (t.match(KW_STRONG[k]) || []).length;
+    if (sc > n) { n = sc; best = k; }
+  }
   return best;
 }
 let taskManual = false;
@@ -198,8 +331,9 @@ function build(raw, curated) {
     const ratings = {};
     RK.forEach(k => ratings[k] = c?.ratings?.[k] ?? (k === "vision" ? (vision ? base.vision : 0) : base[k]));
     if (!vision) ratings.vision = 0;
+    for (const b in BLEND) ratings[b] = Math.round(10 * Object.entries(BLEND[b]).reduce((s, [k, w]) => s + w * ratings[k], 0)) / 10;
     return {id: m.id, name: m.name || m.id, ctx: m.context_length, pIn, pOut, blended, vision, tier, ratings,
-      notes: c?.notes || "", rated: !!c};
+      mult: c?.mult ?? null, notes: c?.notes || "", rated: !!c};
   }).filter(Boolean);
 }
 async function init(force) {
@@ -207,7 +341,10 @@ async function init(force) {
   let curated = {};
   try { curated = (await getJSON("models-curated.json")).models || {}; }
   catch { $("status").textContent = "Could not load models-curated.json (opened via file://? use `python3 -m http.server`). Using heuristic ratings."; }
-  try { const g = await getJSON("github-models.json"); g.data.forEach(m => curated[m.id] = {tier: m._tier, ratings: m._ratings, notes: m._notes}); ghModels = build(g, curated).map(m => ({...m, gh: true, rated: true})); } catch {}
+  try { const g = await getJSON("github-models.json"); g.data.forEach(m => curated[m.id] = {mult: m._multiplier, tier: m._tier, ratings: m._ratings, notes: m._notes}); ghModels = build(g, curated).map(m => ({...m, gh: true, rated: true})); } catch {}
+  try { const r = await getJSON("reddit-signals.json"); signals = r.models || {}; sigDate = r.fetched; } catch {}
+  try { const r = await getJSON("vendor-releases.json"); vendorRel = r; } catch {}
+  try { forumSig = await getJSON("forum-signals.json"); } catch {}
   try {
     const {data, src} = await loadRaw(force);
     const ids = new Set(ghModels.map(m => m.id));
@@ -238,20 +375,55 @@ function recommend(s) {
     m.basis = hasTok ? m.reqCost : m.blended;
     m.eff = m.q * (0.7 + 0.3 * m.ratings.speed / 5) / (1 + m.ctxPct);
   });
-  const order = [...c].sort((a, b) => a.basis - b.basis);
-  order.forEach((m, i) => m.costScore = c.length > 1 ? 1 - i / (c.length - 1) : 1);
+  const lp = c.map(m => Math.log(m.basis + 1e-9)), lo = Math.min(...lp), hi = Math.max(...lp);
+  c.forEach((m, i) => m.costScore = hi > lo ? 1 - (lp[i] - lo) / (hi - lo) : 1);
+  c.forEach(m => { const qs = c.map(x => x.q); const a = Math.min(...qs), b = Math.max(...qs); m.qn = b > a ? (m.q - a) / (b - a) : 1; });
+  const srt = [...c].sort((x, y) => y.q - x.q || y.costScore - x.costScore);
+  const fr = []; let bc = -1;
+  srt.forEach(m => { m.front = m.costScore > bc + 1e-9; if (m.front) { fr.push(m); bc = m.costScore; } });
+  fr.forEach((m, i) => m.pos = fr.length > 1 ? i / (fr.length - 1) : 0);
+  c.forEach(m => { if (!m.front) { const n = fr.reduce((a, f) => Math.abs(f.costScore - m.costScore) < Math.abs(a.costScore - m.costScore) ? f : a); m.pos = n.pos; } });
   const maxEff = Math.max(...c.map(m => m.eff));
   c.forEach(m => m.effRel = Math.round(100 * m.eff / maxEff));
   return {c, hasTok, tokens};
 }
-const scoreWith = (m, w) => (1 - w) * m.q + w * m.costScore;
+const buzz = m => {
+  const f = forumSig && forumSig.models, r = signals;
+  const n = id => ((f && f[id] && f[id].mentions) || 0) + ((r && r[id] && r[id].mentions) || 0);
+  const mx = Math.max(1, ...models.filter(x => x.gh).map(x => n(x.id)));
+  return Math.min(1, n(m.id) / mx);
+};
+const scoreWith = (m, w) => {
+  if (w <= 0.03) return m.q * 1e3 + m.costScore;
+  if (w >= 0.97) return m.costScore * 1e3 + m.q;
+  const k = (w - 0.03) / 0.94;
+  return -Math.abs(m.pos - k) - (m.front ? 0 : 0.15) + m.qn * 0.01 + buzz(m) * 0.3;
+};
 const best = (arr, f) => arr.reduce((a, b) => (f(b) > f(a) || (f(b) === f(a) && b.ctx > a.ctx)) ? b : a);
 
+let signals = {}, sigDate = null, vendorRel = null, forumSig = null;
 // ---------- recommender ----------
 function card(label, m, s, hasTok) {
   const rows = [["Quality fit", `${(m.q * 5).toFixed(1)} / 5 ${m.rated ? "" : "<span class=badge>heuristic</span>"}`], ["Tier", m.tier], ["Context", fmt(m.ctx)]];
   if (hasTok) {
     rows.push(["Context used", `${(m.ctxPct * 100).toFixed(m.ctxPct < .01 ? 2 : 1)}%<div class="bar ${m.ctxPct > .7 ? "hot" : ""}"><i style="width:${Math.min(100, m.ctxPct * 100)}%"></i></div>`]);
+  }
+  const mu = m.mult;
+  rows.push(["Premium requests", mu != null ? `${mu}× per prompt <span class=badge>GitHub docs, legacy plans</span>` : "<span class=badge>not published</span>"]);
+  const vv = vendorRel && vendorRel.vendors && vendorRel.vendors[m.id.split("/")[0]];
+  if (vv) {
+    const safe = u => /^https:\/\//.test(u) ? u : "#";
+    const its = (vv.items || []).slice(0, 2).map(i => `<a href="${esc(safe(i.url))}" target="_blank" rel="noopener">${esc(i.title)}</a>`).join("<br>");
+    rows.push(["Latest from vendor", (its || "") + `${its ? "<br>" : ""}<a href="${esc(safe(vv.url))}" target="_blank" rel="noopener">All news &amp; docs →</a>` + (vendorRel.fetched ? ` <span class=badge>${esc(vendorRel.fetched)}</span>` : "")]);
+  }
+  const sg = signals[m.id];
+  if (sg && sg.threads && sg.threads.length) {
+    const esc = x => x.replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+    rows.push(["Reddit chatter", sg.threads.map(t => `<a href="${t.url}" target="_blank" rel="noopener">${esc(t.title.slice(0, 80))}</a> <span class=badge>r/${t.sub} · ${t.score}↑</span>`).join("<br>") + `<br><span class=badge>${sigDate}</span>`]);
+  }
+  const fs = forumSig && forumSig.models && forumSig.models[m.id];
+  if (fs && fs.threads && fs.threads.length) {
+    rows.push(["Forum chatter", fs.threads.filter(t => /^https:/.test(t.url)).map(t => `<a href="${esc(t.url)}" target="_blank" rel="noopener">${esc(t.title.slice(0, 80))}</a> <span class=badge>${esc(t.src)} · ${+t.score || 0}↑</span>`).join("<br>") + (forumSig.fetched ? `<br><span class=badge>${esc(forumSig.fetched)}</span>` : "")]);
   }
   rows.push(["Usage efficiency", `${m.effRel}/100<div class="bar"><i style="width:${m.effRel}%"></i></div>`]);
   if (!s.ignore) {
@@ -266,28 +438,26 @@ function card(label, m, s, hasTok) {
 }
 function renderRecommender() {
   const s = state(), {c, hasTok, tokens} = recommend(s);
-  document.body.classList.toggle("ign", s.ignore);
-  $("modeHint").textContent = s.ignore
-    ? "Cost is ignored: ranking uses quality/fit only and no $ figures are shown. Token usage is still tracked."
-    : "Ranking blends quality and cost using the Quality ↔ cost slider." + (hasTok ? "" : " Prices shown per 1M tokens.");
+  $("slider").style.setProperty("--p", $("slider").value + "%");
+  const v = s.slider, lab = v <= 0.03 ? "Pure quality: best model regardless of price" : v >= 0.97 ? "Pure cost: cheapest capable model" : v < 0.4 ? "Quality-leaning" : v <= 0.6 ? "Balanced" : "Cost-leaning";
+  $("modeHint").textContent = lab + (hasTok ? "" : ". Prices shown per 1M tokens.");
   // usage panel
   const perMonth = tokens * s.volume;
   $("usage").innerHTML = "";
   if (!c.length) { $("results").innerHTML = `<div class="panel">No models match these constraints. No models have a rating for this task.</div>`; return; }
-  const wo = s.ignore ? 0 : s.slider;
+  const wo = s.slider;
   const overall = best(c, m => scoreWith(m, wo));
-  const cards = [card("Best overall", overall, s, hasTok)];
+  const cards = [card(wo <= 0.03 ? "Best quality (cost ignored)" : wo >= 0.97 ? "Cheapest (quality ignored)" : "Best overall", overall, s, hasTok)];
   if (s.ignore) {
     cards.push(card("Most usage-efficient", best(c, m => m.eff), s, hasTok));
     const ok = c.filter(m => m.ratings[s.task] >= 3);
     if (ok.length) cards.push(card("Fastest acceptable", best(ok, m => m.ratings.speed * 10 + m.q), s, hasTok));
   } else {
-    const wv = Math.max(s.slider, 0.4);
-    cards.push(card("Best value", best(c, m => scoreWith(m, wv)), s, hasTok));
+    cards.push(card("Best value (balanced)", best(c, m => scoreWith(m, 0.5)), s, hasTok));
     const ok = c.filter(m => m.ratings[s.task] >= 3);
     if (ok.length) cards.push(card("Cheapest acceptable", best(ok, m => -m.basis * 1e6 + m.q), s, hasTok));
   }
-  const w = s.ignore ? 0 : s.slider;
+  const w = s.slider;
   const top = [...c].sort((a, b) => scoreWith(b, w) - scoreWith(a, w) || b.ctx - a.ctx).slice(0, 10);
   $("results").innerHTML = `<div class="cards">${cards.join("")}</div>
   <h3 style="margin-top:1rem">Top 10 for your settings</h3><div class="table-wrap"><table><thead><tr><th>#</th><th>Model</th><th>Quality</th>${hasTok ? "<th class=n>Context used</th>" : ""}<th class=n>Efficiency</th>${s.ignore ? "" : `<th class=n>${hasTok ? "Per request" : "$/1M (blended)"}</th>${hasTok && s.volume ? "<th class=n>Per month</th>" : ""}`}</tr></thead><tbody>
@@ -331,12 +501,11 @@ document.querySelectorAll("#tabs button").forEach(b => b.onclick = () => {
   document.querySelectorAll(".view").forEach(v => v.hidden = v.id !== "view-" + b.dataset.view);
 });
 $("task").addEventListener("change", () => { taskManual = true; $("prompt").dispatchEvent(new Event("input")); });
-$("changeTask").onclick = () => { $("taskWrap").hidden = !$("taskWrap").hidden; };
 $("prompt").addEventListener("input", () => {
-  const t = $("prompt").value.trim(), k = t && detectTask(t);
+  const t = $("prompt").value.trim(), hit = t && detectTask(t), k = t && (hit || "reasoning");
   if (!taskManual && k) $("task").value = k;
   $("detected").textContent = !t ? "Type a prompt and I'll detect the task type."
-    : k ? "Detected: " + TASK_LABEL[k] + (taskManual ? " (set manually)" : "") : "Couldn't tell — click change to pick one.";
+    : (hit ? "Detected: " : "No clear match, using general: ") + TASK_LABEL[k] + (taskManual ? " (set manually)" : "") + (hit ? "" : " — pick another in Task type.");
   renderRecommender();
 });
 ["task","slider"].forEach(id => $(id).addEventListener("input", renderRecommender));
@@ -350,7 +519,7 @@ $("compareBtn").onclick = renderCompare;
 $("refresh").onclick = async () => { $("refresh").disabled = true; await init(true); $("refresh").disabled = false; };
 const setTheme = t => { document.documentElement.dataset.theme = t; localStorage.setItem("modelPicker.theme", t); };
 $("theme").onclick = () => setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
-setTheme(localStorage.getItem("modelPicker.theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
+setTheme(localStorage.getItem("modelPicker.theme") || "dark");
 init(false);
 })();
 

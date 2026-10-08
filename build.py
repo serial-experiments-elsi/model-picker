@@ -5,7 +5,7 @@ d = pathlib.Path(__file__).parent
 h = (d/'index.html').read_text()
 css = (d/'style.css').read_text()
 js = (d/'app.js').read_text()
-emb = {n: json.load(open(d/n)) for n in ('models-curated.json','models-snapshot.json','github-models.json')}
+emb = {n: json.load(open(d/n)) for n in ('models-curated.json','models-snapshot.json','github-models.json','reddit-signals.json','vendor-releases.json','forum-signals.json')}
 h = h.replace('<link rel="stylesheet" href="style.css">', '<style>\n'+css+'\n</style>')
 tag = '<script src="app.js"></script>'
 assert tag in h

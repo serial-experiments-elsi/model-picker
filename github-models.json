@@ -1,303 +1,309 @@
 {
- "_note": "Models available in GitHub Copilot. Ratings, context and prices are ESTIMATES (Copilot bills by premium requests, not tokens).",
- "data": [
-  {
-   "id": "anthropic/claude-opus-5.5",
-   "name": "Claude Opus 5.5",
-   "context_length": 400000,
-   "pricing": {
-    "prompt": "1.5e-05",
-    "completion": "7.5e-05"
-   },
-   "architecture": {
-    "input_modalities": [
-     "text",
-     "image"
-    ]
-   },
-   "_tier": "flagship",
-   "_ratings": {
-    "coding": 5,
-    "reasoning": 5,
-    "writing": 5,
-    "extraction": 4,
-    "vision": 4,
-    "speed": 2
-   },
-   "_notes": "Top Anthropic model; best for hard agentic/coding work."
-  },
-  {
-   "id": "anthropic/claude-sonnet-5.5",
-   "name": "Claude Sonnet 5.5",
-   "context_length": 400000,
-   "pricing": {
-    "prompt": "3e-06",
-    "completion": "1.5e-05"
-   },
-   "architecture": {
-    "input_modalities": [
-     "text",
-     "image"
-    ]
-   },
-   "_tier": "balanced",
-   "_ratings": {
-    "coding": 5,
-    "reasoning": 4,
-    "writing": 5,
-    "extraction": 4,
-    "vision": 4,
-    "speed": 3
-   },
-   "_notes": "Strong all-rounder for coding and writing."
-  },
-  {
-   "id": "anthropic/claude-haiku-4.5",
-   "name": "Claude Haiku 4.5",
-   "context_length": 200000,
-   "pricing": {
-    "prompt": "1e-06",
-    "completion": "5e-06"
-   },
-   "architecture": {
-    "input_modalities": [
-     "text",
-     "image"
-    ]
-   },
-   "_tier": "fast-cheap",
-   "_ratings": {
-    "coding": 3,
-    "reasoning": 3,
-    "writing": 4,
-    "extraction": 4,
-    "vision": 3,
-    "speed": 5
-   },
-   "_notes": "Fast, cheap; good for extraction and chat."
-  },
-  {
-   "id": "openai/gpt-6.1-sol",
-   "name": "GPT-6.1 Sol",
-   "context_length": 400000,
-   "pricing": {
-    "prompt": "1e-05",
-    "completion": "4e-05"
-   },
-   "architecture": {
-    "input_modalities": [
-     "text",
-     "image"
-    ]
-   },
-   "_tier": "flagship",
-   "_ratings": {
-    "coding": 5,
-    "reasoning": 5,
-    "writing": 4,
-    "extraction": 4,
-    "vision": 4,
-    "speed": 2
-   },
-   "_notes": "Newest OpenAI flagship; deep reasoning."
-  },
-  {
-   "id": "openai/gpt-6-luna",
-   "name": "GPT-6 Luna",
-   "context_length": 400000,
-   "pricing": {
-    "prompt": "6e-06",
-    "completion": "2.4e-05"
-   },
-   "architecture": {
-    "input_modalities": [
-     "text",
-     "image"
-    ]
-   },
-   "_tier": "flagship",
-   "_ratings": {
-    "coding": 5,
-    "reasoning": 5,
-    "writing": 4,
-    "extraction": 4,
-    "vision": 4,
-    "speed": 3
-   },
-   "_notes": "Strong general-purpose OpenAI model."
-  },
-  {
-   "id": "openai/gpt-5.6-terra",
-   "name": "GPT-5.6 Terra",
-   "context_length": 400000,
-   "pricing": {
-    "prompt": "5e-06",
-    "completion": "2e-05"
-   },
-   "architecture": {
-    "input_modalities": [
-     "text",
-     "image"
-    ]
-   },
-   "_tier": "balanced",
-   "_ratings": {
-    "coding": 4,
-    "reasoning": 4,
-    "writing": 4,
-    "extraction": 4,
-    "vision": 4,
-    "speed": 3
-   },
-   "_notes": "Balanced quality and cost."
-  },
-  {
-   "id": "openai/gpt-5.5",
-   "name": "GPT-5.5",
-   "context_length": 400000,
-   "pricing": {
-    "prompt": "5e-06",
-    "completion": "2e-05"
-   },
-   "architecture": {
-    "input_modalities": [
-     "text",
-     "image"
-    ]
-   },
-   "_tier": "balanced",
-   "_ratings": {
-    "coding": 4,
-    "reasoning": 4,
-    "writing": 4,
-    "extraction": 4,
-    "vision": 4,
-    "speed": 3
-   },
-   "_notes": "Solid all-rounder."
-  },
-  {
-   "id": "openai/gpt-5.4-mini",
-   "name": "GPT-5.4 mini",
-   "context_length": 400000,
-   "pricing": {
-    "prompt": "5e-07",
-    "completion": "2e-06"
-   },
-   "architecture": {
-    "input_modalities": [
-     "text",
-     "image"
-    ]
-   },
-   "_tier": "fast-cheap",
-   "_ratings": {
-    "coding": 3,
-    "reasoning": 3,
-    "writing": 3,
-    "extraction": 4,
-    "vision": 3,
-    "speed": 5
-   },
-   "_notes": "Cheap and quick for simple tasks."
-  },
-  {
-   "id": "openai/gpt-5-mini",
-   "name": "GPT-5 mini",
-   "context_length": 400000,
-   "pricing": {
-    "prompt": "2.5e-07",
-    "completion": "2e-06"
-   },
-   "architecture": {
-    "input_modalities": [
-     "text",
-     "image"
-    ]
-   },
-   "_tier": "fast-cheap",
-   "_ratings": {
-    "coding": 3,
-    "reasoning": 3,
-    "writing": 3,
-    "extraction": 3,
-    "vision": 3,
-    "speed": 5
-   },
-   "_notes": "Very cheap, light reasoning."
-  },
-  {
-   "id": "openai/gpt-5.3-codex",
-   "name": "GPT-5.3-Codex",
-   "context_length": 400000,
-   "pricing": {
-    "prompt": "2e-06",
-    "completion": "1e-05"
-   },
-   "architecture": {
-    "input_modalities": [
-     "text"
-    ]
-   },
-   "_tier": "balanced",
-   "_ratings": {
-    "coding": 5,
-    "reasoning": 4,
-    "writing": 2,
-    "extraction": 3,
-    "vision": 0,
-    "speed": 3
-   },
-   "_notes": "Tuned for code generation and refactoring."
-  },
-  {
-   "id": "microsoft/mai-code-1.1-flash",
-   "name": "MAI-Code-1.1-Flash",
-   "context_length": 128000,
-   "pricing": {
-    "prompt": "3e-07",
-    "completion": "1.2e-06"
-   },
-   "architecture": {
-    "input_modalities": [
-     "text"
-    ]
-   },
-   "_tier": "fast-cheap",
-   "_ratings": {
-    "coding": 4,
-    "reasoning": 3,
-    "writing": 2,
-    "extraction": 3,
-    "vision": 0,
-    "speed": 5
-   },
-   "_notes": "Fast coding model for quick edits."
-  },
-  {
-   "id": "google/gemini-3.8-flash",
-   "name": "Gemini 3.8 Flash",
-   "context_length": 1000000,
-   "pricing": {
-    "prompt": "3e-07",
-    "completion": "2.5e-06"
-   },
-   "architecture": {
-    "input_modalities": [
-     "text",
-     "image"
-    ]
-   },
-   "_tier": "fast-cheap",
-   "_ratings": {
-    "coding": 3,
-    "reasoning": 3,
-    "writing": 3,
-    "extraction": 4,
-    "vision": 4,
-    "speed": 5
-   },
-   "_notes": "Fast, huge context; great for summarizing long inputs."
-  }
- ]
+  "_note": "Models available in GitHub Copilot. Ratings, context and prices are ESTIMATES (Copilot bills by premium requests, not tokens).",
+  "data": [
+    {
+      "id": "anthropic/claude-opus-5.5",
+      "name": "Claude Opus 5.5",
+      "context_length": 400000,
+      "pricing": {
+        "prompt": "1.5e-05",
+        "completion": "7.5e-05"
+      },
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ]
+      },
+      "_tier": "flagship",
+      "_ratings": {
+        "coding": 5,
+        "reasoning": 5,
+        "writing": 5,
+        "extraction": 4,
+        "vision": 4,
+        "speed": 2
+      },
+      "_notes": "Top Anthropic model; best for hard agentic/coding work."
+    },
+    {
+      "id": "anthropic/claude-sonnet-5.5",
+      "name": "Claude Sonnet 5.5",
+      "context_length": 400000,
+      "pricing": {
+        "prompt": "3e-06",
+        "completion": "1.5e-05"
+      },
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ]
+      },
+      "_tier": "balanced",
+      "_ratings": {
+        "coding": 5,
+        "reasoning": 4,
+        "writing": 5,
+        "extraction": 4,
+        "vision": 4,
+        "speed": 3
+      },
+      "_notes": "Strong all-rounder for coding and writing."
+    },
+    {
+      "id": "anthropic/claude-haiku-4.5",
+      "name": "Claude Haiku 4.5",
+      "context_length": 200000,
+      "pricing": {
+        "prompt": "1e-06",
+        "completion": "5e-06"
+      },
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ]
+      },
+      "_tier": "fast-cheap",
+      "_ratings": {
+        "coding": 3,
+        "reasoning": 3,
+        "writing": 4,
+        "extraction": 4,
+        "vision": 3,
+        "speed": 5
+      },
+      "_notes": "Fast, cheap; good for extraction and chat.",
+      "_multiplier": 0.33
+    },
+    {
+      "id": "openai/gpt-6.1-sol",
+      "name": "GPT-6.1 Sol",
+      "context_length": 400000,
+      "pricing": {
+        "prompt": "1e-05",
+        "completion": "4e-05"
+      },
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ]
+      },
+      "_tier": "flagship",
+      "_ratings": {
+        "coding": 5,
+        "reasoning": 5,
+        "writing": 4,
+        "extraction": 4,
+        "vision": 4,
+        "speed": 2
+      },
+      "_notes": "Newest OpenAI flagship; deep reasoning."
+    },
+    {
+      "id": "openai/gpt-6-luna",
+      "name": "GPT-6 Luna",
+      "context_length": 400000,
+      "pricing": {
+        "prompt": "6e-06",
+        "completion": "2.4e-05"
+      },
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ]
+      },
+      "_tier": "flagship",
+      "_ratings": {
+        "coding": 5,
+        "reasoning": 5,
+        "writing": 4,
+        "extraction": 4,
+        "vision": 4,
+        "speed": 3
+      },
+      "_notes": "Strong general-purpose OpenAI model."
+    },
+    {
+      "id": "openai/gpt-5.6-terra",
+      "name": "GPT-5.6 Terra",
+      "context_length": 400000,
+      "pricing": {
+        "prompt": "5e-06",
+        "completion": "2e-05"
+      },
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ]
+      },
+      "_tier": "balanced",
+      "_ratings": {
+        "coding": 4,
+        "reasoning": 4,
+        "writing": 4,
+        "extraction": 4,
+        "vision": 4,
+        "speed": 3
+      },
+      "_notes": "Balanced quality and cost."
+    },
+    {
+      "id": "openai/gpt-5.5",
+      "name": "GPT-5.5",
+      "context_length": 400000,
+      "pricing": {
+        "prompt": "5e-06",
+        "completion": "2e-05"
+      },
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ]
+      },
+      "_tier": "balanced",
+      "_ratings": {
+        "coding": 4,
+        "reasoning": 4,
+        "writing": 4,
+        "extraction": 4,
+        "vision": 4,
+        "speed": 3
+      },
+      "_notes": "Solid all-rounder.",
+      "_multiplier": 57
+    },
+    {
+      "id": "openai/gpt-5.4-mini",
+      "name": "GPT-5.4 mini",
+      "context_length": 400000,
+      "pricing": {
+        "prompt": "5e-07",
+        "completion": "2e-06"
+      },
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ]
+      },
+      "_tier": "fast-cheap",
+      "_ratings": {
+        "coding": 3,
+        "reasoning": 3,
+        "writing": 3,
+        "extraction": 4,
+        "vision": 3,
+        "speed": 5
+      },
+      "_notes": "Cheap and quick for simple tasks.",
+      "_multiplier": 6
+    },
+    {
+      "id": "openai/gpt-5-mini",
+      "name": "GPT-5 mini",
+      "context_length": 400000,
+      "pricing": {
+        "prompt": "2.5e-07",
+        "completion": "2e-06"
+      },
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ]
+      },
+      "_tier": "fast-cheap",
+      "_ratings": {
+        "coding": 3,
+        "reasoning": 3,
+        "writing": 3,
+        "extraction": 3,
+        "vision": 3,
+        "speed": 5
+      },
+      "_notes": "Very cheap, light reasoning.",
+      "_multiplier": 0.33
+    },
+    {
+      "id": "openai/gpt-5.3-codex",
+      "name": "GPT-5.3-Codex",
+      "context_length": 400000,
+      "pricing": {
+        "prompt": "2e-06",
+        "completion": "1e-05"
+      },
+      "architecture": {
+        "input_modalities": [
+          "text"
+        ]
+      },
+      "_tier": "balanced",
+      "_ratings": {
+        "coding": 5,
+        "reasoning": 4,
+        "writing": 2,
+        "extraction": 3,
+        "vision": 0,
+        "speed": 3
+      },
+      "_notes": "Tuned for code generation and refactoring.",
+      "_multiplier": 6
+    },
+    {
+      "id": "microsoft/mai-code-1.1-flash",
+      "name": "MAI-Code-1.1-Flash",
+      "context_length": 128000,
+      "pricing": {
+        "prompt": "3e-07",
+        "completion": "1.2e-06"
+      },
+      "architecture": {
+        "input_modalities": [
+          "text"
+        ]
+      },
+      "_tier": "fast-cheap",
+      "_ratings": {
+        "coding": 4,
+        "reasoning": 3,
+        "writing": 2,
+        "extraction": 3,
+        "vision": 0,
+        "speed": 5
+      },
+      "_notes": "Fast coding model for quick edits.",
+      "_multiplier": 0.25
+    },
+    {
+      "id": "google/gemini-3.8-flash",
+      "name": "Gemini 3.8 Flash",
+      "context_length": 1000000,
+      "pricing": {
+        "prompt": "3e-07",
+        "completion": "2.5e-06"
+      },
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ]
+      },
+      "_tier": "fast-cheap",
+      "_ratings": {
+        "coding": 3,
+        "reasoning": 3,
+        "writing": 3,
+        "extraction": 4,
+        "vision": 4,
+        "speed": 5
+      },
+      "_notes": "Fast, huge context; great for summarizing long inputs."
+    }
+  ]
 }

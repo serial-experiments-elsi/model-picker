@@ -1,0 +1,269 @@
+{
+ "fetched": "2026-10-08",
+ "models": {
+  "anthropic/claude-opus-5.5": {
+   "mentions": 10,
+   "threads": [
+    {
+     "title": "Claude Opus 5.5",
+     "url": "https://news.ycombinator.com/item?id=49803892",
+     "src": "HN",
+     "score": 1806
+    },
+    {
+     "title": "Claude Opus 5.5 Intelligence, Performance and Price Analysis (Max)",
+     "url": "https://news.ycombinator.com/item?id=49804316",
+     "src": "HN",
+     "score": 333
+    },
+    {
+     "title": "Claude Opus 5.5",
+     "url": "https://news.ycombinator.com/item?id=49803863",
+     "src": "HN",
+     "score": 273
+    }
+   ]
+  },
+  "anthropic/claude-sonnet-5.5": {
+   "mentions": 2,
+   "threads": [
+    {
+     "title": "Claude Sonnet 5.5 for code review: More catches than Sonnet 5, in half the time",
+     "url": "https://news.ycombinator.com/item?id=49896246",
+     "src": "HN",
+     "score": 4
+    },
+    {
+     "title": "Claude Sonnet 5.5 (Max Effort) Intelligence, Performance and Price Analysis",
+     "url": "https://news.ycombinator.com/item?id=49882688",
+     "src": "HN",
+     "score": 4
+    }
+   ]
+  },
+  "anthropic/claude-haiku-4.5": {
+   "mentions": 9,
+   "threads": [
+    {
+     "title": "Claude Haiku 4.5",
+     "url": "https://news.ycombinator.com/item?id=45595403",
+     "src": "HN",
+     "score": 730
+    },
+    {
+     "title": "Claude Haiku 4.5 System Card [pdf]",
+     "url": "https://news.ycombinator.com/item?id=45596168",
+     "src": "HN",
+     "score": 51
+    },
+    {
+     "title": "Show HN: TTFT benchmark: LLM Gateway vs. OpenRouter (Claude-haiku-4.5, 150 runs)",
+     "url": "https://news.ycombinator.com/item?id=49012741",
+     "src": "HN",
+     "score": 3
+    }
+   ]
+  },
+  "openai/gpt-6.1-sol": {
+   "mentions": 8,
+   "threads": [
+    {
+     "title": "GPT 6.1 Sol: Near-Astra intelligence for a fifth of the price",
+     "url": "https://news.ycombinator.com/item?id=49896586",
+     "src": "HN",
+     "score": 1067
+    },
+    {
+     "title": "GPT-6.1 Sol replaces GPT-6 Sol after just 7 days, with near-Astra intelligence",
+     "url": "https://news.ycombinator.com/item?id=49906669",
+     "src": "HN",
+     "score": 80
+    },
+    {
+     "title": "GPT-6.1 Sol (Max): Intelligence, Performance and Price Analysis",
+     "url": "https://news.ycombinator.com/item?id=49898379",
+     "src": "HN",
+     "score": 4
+    }
+   ]
+  },
+  "openai/gpt-6-luna": {
+   "mentions": 3,
+   "threads": [
+    {
+     "title": "GPT-6 Sol is like GPT-5.6 Terra, GPT-6 Luna is like GPT-5.6 Asteroid",
+     "url": "https://news.ycombinator.com/item?id=49835237",
+     "src": "HN",
+     "score": 18
+    },
+    {
+     "title": "Claude Opus 5.5, GPT-6 Sol, GPT-6 Luna, and a new price war",
+     "url": "https://news.ycombinator.com/item?id=49812887",
+     "src": "HN",
+     "score": 3
+    },
+    {
+     "title": "GPT-6 Luna (Max) Intelligence, Performance and Price Analysis",
+     "url": "https://news.ycombinator.com/item?id=49806285",
+     "src": "HN",
+     "score": 2
+    }
+   ]
+  },
+  "openai/gpt-5.6-terra": {
+   "mentions": 3,
+   "threads": [
+    {
+     "title": "GPT-6 Sol is like GPT-5.6 Terra, GPT-6 Luna is like GPT-5.6 Asteroid",
+     "url": "https://news.ycombinator.com/item?id=49835237",
+     "src": "HN",
+     "score": 18
+    },
+    {
+     "title": "GPT-5.6-terra used 48.5% more context than Mimo-2.5-pro",
+     "url": "https://news.ycombinator.com/item?id=48919754",
+     "src": "HN",
+     "score": 3
+    },
+    {
+     "title": "Free GPT 5.6 Terra and Luna (2.5M/day) & 250k Sol \u2013 free experiments",
+     "url": "https://news.ycombinator.com/item?id=48975696",
+     "src": "HN",
+     "score": 2
+    }
+   ]
+  },
+  "openai/gpt-5.5": {
+   "mentions": 10,
+   "threads": [
+    {
+     "title": "GPT-5.5",
+     "url": "https://news.ycombinator.com/item?id=47879092",
+     "src": "HN",
+     "score": 1580
+    },
+    {
+     "title": "GPT-5.5 hallucinates 3x more than MIT-licensed GLM-5.2",
+     "url": "https://news.ycombinator.com/item?id=48600167",
+     "src": "HN",
+     "score": 585
+    },
+    {
+     "title": "DeepSeek V4 Pro beats GPT-5.5 Pro on precision",
+     "url": "https://news.ycombinator.com/item?id=48440448",
+     "src": "HN",
+     "score": 397
+    }
+   ]
+  },
+  "openai/gpt-5.4-mini": {
+   "mentions": 4,
+   "threads": [
+    {
+     "title": "GPT\u20115.4 Mini and Nano",
+     "url": "https://news.ycombinator.com/item?id=47415441",
+     "src": "HN",
+     "score": 248
+    },
+    {
+     "title": "Hands-on comparison of Jev with Haiku 4.5, GPT-5.4-mini, and Gemini 3.5 Flash",
+     "url": "https://news.ycombinator.com/item?id=49982760",
+     "src": "HN",
+     "score": 3
+    },
+    {
+     "title": "Show HN: Classer \u2013 high-performance classification API (beats GPT-5.4-mini)",
+     "url": "https://news.ycombinator.com/item?id=48489816",
+     "src": "HN",
+     "score": 2
+    }
+   ]
+  },
+  "openai/gpt-5-mini": {
+   "mentions": 6,
+   "threads": [
+    {
+     "title": "Tau\u00b2 benchmark: How a prompt rewrite boosted GPT-5-mini by 22%",
+     "url": "https://news.ycombinator.com/item?id=45275354",
+     "src": "HN",
+     "score": 197
+    },
+    {
+     "title": "Show HN: I built a vibe agent builder with deployment (GPT-5-mini powered)",
+     "url": "https://news.ycombinator.com/item?id=44876340",
+     "src": "HN",
+     "score": 3
+    },
+    {
+     "title": "Claude Haiku 4.5 vs. GLM-4.6 vs. GPT-5 Mini: Job Queue System Benchmark",
+     "url": "https://news.ycombinator.com/item?id=45741464",
+     "src": "HN",
+     "score": 2
+    }
+   ]
+  },
+  "openai/gpt-5.3-codex": {
+   "mentions": 10,
+   "threads": [
+    {
+     "title": "GPT-5.3-Codex",
+     "url": "https://news.ycombinator.com/item?id=46902638",
+     "src": "HN",
+     "score": 1530
+    },
+    {
+     "title": "GPT\u20115.3\u2011Codex\u2011Spark",
+     "url": "https://news.ycombinator.com/item?id=46992553",
+     "src": "HN",
+     "score": 890
+    },
+    {
+     "title": "GPT-5.3-Codex being routed to GPT-5.2",
+     "url": "https://news.ycombinator.com/item?id=46968891",
+     "src": "HN",
+     "score": 77
+    }
+   ]
+  },
+  "microsoft/mai-code-1.1-flash": {
+   "mentions": 2,
+   "threads": [
+    {
+     "title": "MAI-Code-1.1-Flash: Better, faster, at a quarter of the cost",
+     "url": "https://news.ycombinator.com/item?id=49263442",
+     "src": "HN",
+     "score": 6
+    },
+    {
+     "title": "MAI-Code-1.1-Flash: Better, faster, at a quarter of the cost",
+     "url": "https://news.ycombinator.com/item?id=50000104",
+     "src": "HN",
+     "score": 1
+    }
+   ]
+  },
+  "google/gemini-3.8-flash": {
+   "mentions": 12,
+   "threads": [
+    {
+     "title": "Gemini 3.8 Flash and 3.8 Flash Cyber",
+     "url": "https://news.ycombinator.com/item?id=49537553",
+     "src": "HN",
+     "score": 1160
+    },
+    {
+     "title": "Gemini 3.8 Flash and 3.8 Flash Cyber",
+     "url": "https://news.ycombinator.com/item?id=49538007",
+     "src": "HN",
+     "score": 76
+    },
+    {
+     "title": "Kimi K3 and GLM-5.3 are better than Gemini 3.8 Flash",
+     "url": "https://news.ycombinator.com/item?id=49539315",
+     "src": "HN",
+     "score": 11
+    }
+   ]
+  }
+ }
+}
