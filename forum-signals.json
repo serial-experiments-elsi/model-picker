@@ -1,5 +1,5 @@
 {
- "fetched": "2026-10-12",
+ "fetched": "2026-10-19",
  "models": {
   "anthropic/claude-opus-5.5": {
    "mentions": 10,
@@ -65,7 +65,7 @@
    ]
   },
   "openai/gpt-6.1-sol": {
-   "mentions": 9,
+   "mentions": 11,
    "threads": [
     {
      "title": "GPT 6.1 Sol: Near-Astra intelligence for a fifth of the price",
@@ -88,7 +88,7 @@
    ]
   },
   "openai/gpt-6-luna": {
-   "mentions": 3,
+   "mentions": 4,
    "threads": [
     {
      "title": "GPT-6 Sol is like GPT-5.6 Terra, GPT-6 Luna is like GPT-5.6 Asteroid",
