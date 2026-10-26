@@ -1,5 +1,5 @@
 {
- "fetched": "2026-10-19",
+ "fetched": "2026-10-26",
  "models": {
   "anthropic/claude-opus-5.5": {
    "mentions": 10,
@@ -25,7 +25,7 @@
    ]
   },
   "anthropic/claude-sonnet-5.5": {
-   "mentions": 2,
+   "mentions": 3,
    "threads": [
     {
      "title": "Claude Sonnet 5.5 for code review: More catches than Sonnet 5, in half the time",
@@ -38,6 +38,12 @@
      "url": "https://news.ycombinator.com/item?id=49882688",
      "src": "HN",
      "score": 4
+    },
+    {
+     "title": "Elevated errors for Claude Sonnet 5.5",
+     "url": "https://news.ycombinator.com/item?id=50228908",
+     "src": "HN",
+     "score": 1
     }
    ]
   },
