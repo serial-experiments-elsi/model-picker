@@ -1,5 +1,5 @@
 {
- "fetched": "2026-10-26",
+ "fetched": "2026-11-02",
  "vendors": {
   "anthropic": {
    "url": "https://www.anthropic.com/news",
@@ -15,8 +15,8 @@
      "date": ""
     },
     {
-     "title": "Cyber verification program",
-     "url": "https://www.anthropic.com/news/cyber-verification-program",
+     "title": "S1 sec",
+     "url": "https://www.anthropic.com/news/s1-sec",
      "date": ""
     }
    ]
@@ -25,25 +25,30 @@
    "url": "https://openai.com/news/",
    "items": [
     {
-     "title": "Rapidly scaling online storage to serve over 1 billion ChatGPT users (Part II)",
-     "url": "https://openai.com/index/scaling-storage-one-billion-users-part-two",
-     "date": "Fri, 23 Oct 2026"
+     "title": "Making it easier for websites to express AI training preferences",
+     "url": "https://openai.com/index/helping-websites-express-ai-training-preferences",
+     "date": "Fri, 30 Oct 2026"
     },
     {
-     "title": "Securing our frontier model training environment",
-     "url": "https://openai.com/index/securing-our-frontier-model-training-environment",
-     "date": "Fri, 23 Oct 2026"
+     "title": "Community safety report and new protections for teens",
+     "url": "https://openai.com/index/community-safety-report-and-new-protections-for-teens",
+     "date": "Fri, 30 Oct 2026"
     },
     {
-     "title": "OpenAI and Poland’s NASK partner to advance AI safety and security",
-     "url": "https://openai.com/index/openai-nask-ai-safety-security-partnership",
-     "date": "Fri, 23 Oct 2026"
+     "title": "Fair use benefits everyone",
+     "url": "https://openai.com/index/fair-use-benefits-everyone",
+     "date": "Fri, 30 Oct 2026"
     }
    ]
   },
   "google": {
    "url": "https://blog.google/technology/ai/",
    "items": [
+    {
+     "title": "Our newest AI Quest: Mapping the human brain",
+     "url": "https://blog.google/products-and-platforms/products/education/ai-quests-polar-peaks/",
+     "date": "Mon, 26 Oct 2026"
+    },
     {
      "title": "Southeast Asia’s digital economy to hit $368 billion",
      "url": "https://blog.google/company-news/inside-google/around-the-globe/google-asia/e-conomy-sea-report-2026/",
@@ -53,11 +58,6 @@
      "title": "Gemini 4 Argon: Built to solve your hardest problems",
      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-argon/",
      "date": "Tue, 13 Oct 2026"
-    },
-    {
-     "title": "Introducing Playground: Create and play custom games",
-     "url": "https://blog.google/innovation-and-ai/technology/ai/playground-experimental-gaming-platform/",
-     "date": "Wed, 07 Oct 2026"
     }
    ]
   },

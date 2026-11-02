@@ -1,5 +1,5 @@
 {
- "fetched": "2026-10-26",
+ "fetched": "2026-11-02",
  "models": {
   "anthropic/claude-opus-5.5": {
    "mentions": 10,
@@ -249,7 +249,7 @@
    ]
   },
   "google/gemini-3.8-flash": {
-   "mentions": 12,
+   "mentions": 10,
    "threads": [
     {
      "title": "Gemini 3.8 Flash and 3.8 Flash Cyber",
