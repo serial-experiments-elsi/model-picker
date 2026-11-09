@@ -1,5 +1,5 @@
 {
- "fetched": "2026-11-02",
+ "fetched": "2026-11-09",
  "models": {
   "anthropic/claude-opus-5.5": {
    "mentions": 10,
@@ -86,15 +86,15 @@
      "score": 80
     },
     {
-     "title": "GPT-6.1 Sol (Max): Intelligence, Performance and Price Analysis",
-     "url": "https://news.ycombinator.com/item?id=49898379",
+     "title": "GPT-6 Luna and GPT-6.1 Sol are 90% off the listed price",
+     "url": "https://news.ycombinator.com/item?id=50415103",
      "src": "HN",
      "score": 4
     }
    ]
   },
   "openai/gpt-6-luna": {
-   "mentions": 4,
+   "mentions": 5,
    "threads": [
     {
      "title": "GPT-6 Sol is like GPT-5.6 Terra, GPT-6 Luna is like GPT-5.6 Asteroid",
@@ -103,16 +103,16 @@
      "score": 18
     },
     {
+     "title": "GPT-6 Luna and GPT-6.1 Sol are 90% off the listed price",
+     "url": "https://news.ycombinator.com/item?id=50415103",
+     "src": "HN",
+     "score": 4
+    },
+    {
      "title": "Claude Opus 5.5, GPT-6 Sol, GPT-6 Luna, and a new price war",
      "url": "https://news.ycombinator.com/item?id=49812887",
      "src": "HN",
      "score": 3
-    },
-    {
-     "title": "GPT-6 Luna (Max) Intelligence, Performance and Price Analysis",
-     "url": "https://news.ycombinator.com/item?id=49806285",
-     "src": "HN",
-     "score": 2
     }
    ]
   },

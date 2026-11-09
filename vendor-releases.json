@@ -1,5 +1,5 @@
 {
- "fetched": "2026-11-02",
+ "fetched": "2026-11-09",
  "vendors": {
   "anthropic": {
    "url": "https://www.anthropic.com/news",
@@ -25,19 +25,19 @@
    "url": "https://openai.com/news/",
    "items": [
     {
-     "title": "Making it easier for websites to express AI training preferences",
-     "url": "https://openai.com/index/helping-websites-express-ai-training-preferences",
-     "date": "Fri, 30 Oct 2026"
+     "title": "Partnering with Hacktron to find vulnerabilities in OpenAI’s systems",
+     "url": "https://openai.com/index/partnering-with-hacktron",
+     "date": "Fri, 06 Nov 2026"
     },
     {
-     "title": "Community safety report and new protections for teens",
-     "url": "https://openai.com/index/community-safety-report-and-new-protections-for-teens",
-     "date": "Fri, 30 Oct 2026"
+     "title": "Measuring how AI agents handle everyday wet-lab science",
+     "url": "https://openai.com/index/measuring-how-ai-agents-handle-wet-lab-science",
+     "date": "Fri, 06 Nov 2026"
     },
     {
-     "title": "Fair use benefits everyone",
-     "url": "https://openai.com/index/fair-use-benefits-everyone",
-     "date": "Fri, 30 Oct 2026"
+     "title": "Australian universities are creating AI-native graduates",
+     "url": "https://openai.com/index/australian-universities-ai-native-graduates",
+     "date": "Thu, 05 Nov 2026"
     }
    ]
   },
@@ -45,19 +45,19 @@
    "url": "https://blog.google/technology/ai/",
    "items": [
     {
+     "title": "Gemini Omni 1.2 Flash: Fast and cost-effective with longer clips",
+     "url": "https://blog.google/innovation-and-ai/technology/developers-tools/introducing-gemini-omni-1-2-flash/",
+     "date": "Thu, 05 Nov 2026"
+    },
+    {
+     "title": "The latest AI news we announced in October 2026",
+     "url": "https://blog.google/innovation-and-ai/technology/ai/google-ai-updates-october-2026/",
+     "date": "Mon, 02 Nov 2026"
+    },
+    {
      "title": "Our newest AI Quest: Mapping the human brain",
      "url": "https://blog.google/products-and-platforms/products/education/ai-quests-polar-peaks/",
      "date": "Mon, 26 Oct 2026"
-    },
-    {
-     "title": "Southeast Asia’s digital economy to hit $368 billion",
-     "url": "https://blog.google/company-news/inside-google/around-the-globe/google-asia/e-conomy-sea-report-2026/",
-     "date": "Wed, 21 Oct 2026"
-    },
-    {
-     "title": "Gemini 4 Argon: Built to solve your hardest problems",
-     "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-argon/",
-     "date": "Tue, 13 Oct 2026"
     }
    ]
   },
