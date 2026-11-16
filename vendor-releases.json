@@ -1,5 +1,5 @@
 {
- "fetched": "2026-11-09",
+ "fetched": "2026-11-16",
  "vendors": {
   "anthropic": {
    "url": "https://www.anthropic.com/news",
@@ -25,19 +25,19 @@
    "url": "https://openai.com/news/",
    "items": [
     {
-     "title": "Partnering with Hacktron to find vulnerabilities in OpenAI’s systems",
-     "url": "https://openai.com/index/partnering-with-hacktron",
-     "date": "Fri, 06 Nov 2026"
+     "title": "LVMH’s Media Division announces strategic partnership with OpenAI",
+     "url": "https://openai.com/index/lvmh-media-division-partnership",
+     "date": "Mon, 16 Nov 2026"
     },
     {
-     "title": "Measuring how AI agents handle everyday wet-lab science",
-     "url": "https://openai.com/index/measuring-how-ai-agents-handle-wet-lab-science",
-     "date": "Fri, 06 Nov 2026"
+     "title": "The King’s Trust and OpenAI launch £1m partnership",
+     "url": "https://openai.com/index/the-kings-trust-and-openai",
+     "date": "Mon, 16 Nov 2026"
     },
     {
-     "title": "Australian universities are creating AI-native graduates",
-     "url": "https://openai.com/index/australian-universities-ai-native-graduates",
-     "date": "Thu, 05 Nov 2026"
+     "title": "A step toward defining the Standard Model on a lattice",
+     "url": "https://openai.com/index/step-toward-defining-the-standard-model",
+     "date": "Sun, 15 Nov 2026"
     }
    ]
   },
@@ -45,19 +45,19 @@
    "url": "https://blog.google/technology/ai/",
    "items": [
     {
-     "title": "Gemini Omni 1.2 Flash: Fast and cost-effective with longer clips",
-     "url": "https://blog.google/innovation-and-ai/technology/developers-tools/introducing-gemini-omni-1-2-flash/",
-     "date": "Thu, 05 Nov 2026"
+     "title": "New Ask Maps features to help with holiday travel and prep",
+     "url": "https://blog.google/products-and-platforms/products/maps/ask-maps-holiday-travel-features-2026/",
+     "date": "Mon, 16 Nov 2026"
     },
     {
-     "title": "The latest AI news we announced in October 2026",
-     "url": "https://blog.google/innovation-and-ai/technology/ai/google-ai-updates-october-2026/",
-     "date": "Mon, 02 Nov 2026"
+     "title": "Google Search gets a major upgrade with Gemini 4 Hydrogen",
+     "url": "https://blog.google/products-and-platforms/products/search/gemini-4-hydrogen-search-upgrade/",
+     "date": "Thu, 12 Nov 2026"
     },
     {
-     "title": "Our newest AI Quest: Mapping the human brain",
-     "url": "https://blog.google/products-and-platforms/products/education/ai-quests-polar-peaks/",
-     "date": "Mon, 26 Oct 2026"
+     "title": "Gemini Decisions API: Fast, calibrated multimodal decisions",
+     "url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-decisions-api/",
+     "date": "Wed, 11 Nov 2026"
     }
    ]
   },
