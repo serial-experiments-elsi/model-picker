@@ -1,5 +1,5 @@
 {
- "fetched": "2026-11-16",
+ "fetched": "2026-11-23",
  "vendors": {
   "anthropic": {
    "url": "https://www.anthropic.com/news",
@@ -25,19 +25,19 @@
    "url": "https://openai.com/news/",
    "items": [
     {
-     "title": "LVMH’s Media Division announces strategic partnership with OpenAI",
-     "url": "https://openai.com/index/lvmh-media-division-partnership",
-     "date": "Mon, 16 Nov 2026"
+     "title": "Perplexity and Intelligence",
+     "url": "https://openai.com/index/perplexity-and-intelligence",
+     "date": "Sun, 22 Nov 2026"
     },
     {
-     "title": "The King’s Trust and OpenAI launch £1m partnership",
-     "url": "https://openai.com/index/the-kings-trust-and-openai",
-     "date": "Mon, 16 Nov 2026"
+     "title": "Combatting adversarial distillation",
+     "url": "https://openai.com/index/combatting-adversarial-distillation",
+     "date": "Fri, 20 Nov 2026"
     },
     {
-     "title": "A step toward defining the Standard Model on a lattice",
-     "url": "https://openai.com/index/step-toward-defining-the-standard-model",
-     "date": "Sun, 15 Nov 2026"
+     "title": "Hebbia sees improvements in financial research with GPT-6 Astra",
+     "url": "https://openai.com/business/customer-stories/hebbia",
+     "date": "Fri, 20 Nov 2026"
     }
    ]
   },
@@ -45,19 +45,19 @@
    "url": "https://blog.google/technology/ai/",
    "items": [
     {
-     "title": "New Ask Maps features to help with holiday travel and prep",
-     "url": "https://blog.google/products-and-platforms/products/maps/ask-maps-holiday-travel-features-2026/",
-     "date": "Mon, 16 Nov 2026"
+     "title": "A more tailored Google Search that’s uniquely yours",
+     "url": "https://blog.google/products-and-platforms/products/search/google-search-personal-intelligence-apps/",
+     "date": "Mon, 23 Nov 2026"
     },
     {
-     "title": "Google Search gets a major upgrade with Gemini 4 Hydrogen",
-     "url": "https://blog.google/products-and-platforms/products/search/gemini-4-hydrogen-search-upgrade/",
-     "date": "Thu, 12 Nov 2026"
+     "title": "Introducing Tool Retrieval in the Gemini API",
+     "url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-api-tool-retrieval/",
+     "date": "Thu, 19 Nov 2026"
     },
     {
-     "title": "Gemini Decisions API: Fast, calibrated multimodal decisions",
-     "url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-decisions-api/",
-     "date": "Wed, 11 Nov 2026"
+     "title": "Walter Isaacson on curiosity and creativity in the AI age.",
+     "url": "https://blog.google/innovation-and-ai/technology/ai/dialogues-walter-isaacson/",
+     "date": "Thu, 19 Nov 2026"
     }
    ]
   },

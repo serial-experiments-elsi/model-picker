@@ -1,5 +1,5 @@
 {
- "fetched": "2026-11-16",
+ "fetched": "2026-11-23",
  "models": {
   "anthropic/claude-opus-5.5": {
    "mentions": 10,
@@ -43,7 +43,7 @@
      "title": "2026 Frontier Token Economics: GPT-6.1 Terra Pro vs Claude Sonnet 5.5 vs DeepSeek V4.1 (And Why Deploys Bust Your Prefix Cache)",
      "url": "https://dev.to/tokenmargindev/2026-frontier-token-economics-gpt-61-terra-pro-vs-claude-sonnet-55-vs-deepseek-v41-and-why-1g81",
      "src": "Dev.to",
-     "score": 2
+     "score": 3
     }
    ]
   },
